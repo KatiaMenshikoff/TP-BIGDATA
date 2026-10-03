@@ -1,0 +1,30 @@
+# Copiar a config/pipeline.yaml y ajustar. Sin credenciales: los secretos van en variables de entorno (.env).
+paths:
+  lake_root: datalake            # en Colab: /content/drive/MyDrive/cpa/datalake
+  landing: ${lake_root}/landing
+  bronze: ${lake_root}/bronze
+  silver: ${lake_root}/silver
+  gold: ${lake_root}/gold
+  quarantine: ${lake_root}/quarantine
+  checkpoints: ${lake_root}/_checkpoints
+  metadata: ${lake_root}/_metadata
+spark:
+  master: local[*]
+  shuffle_partitions: 8
+  session_timezone: UTC          # D-07: obligatorio
+  partition_overwrite_mode: dynamic
+streaming:
+  max_files_per_trigger: 10
+  trigger: available_now         # demo determinística; producción: "1 minute"
+  watermark_delay: 62 days       # D-05 (abierta)
+quality:
+  min_cost_usd_increment: -0.01  # Q02
+  csat_range: [1, 5]             # Q06
+  usd_fx_tolerance: [0.99, 1.01] # Q08
+anomalies:
+  method: robust_z_mad           # D-08
+  group_by: [service, metric]
+  threshold: 3.5
+cassandra:
+  keyspace: cpa
+  # ASTRA_DB_TOKEN y ASTRA_DB_SECURE_BUNDLE_PATH se leen del entorno

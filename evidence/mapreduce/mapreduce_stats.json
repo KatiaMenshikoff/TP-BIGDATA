@@ -1,0 +1,19 @@
+{
+  "input_files": 120,
+  "job1_dedup": {
+    "map_input_records": 43200,
+    "map_output_records": 43200,
+    "shuffle_records": 43200,
+    "reduce_output_records": 43200
+  },
+  "job2_aggregate": {
+    "map_input_records": 42989,
+    "map_output_records": 42989,
+    "shuffle_records": 28377,
+    "reduce_output_records": 11050
+  },
+  "clean_events": 42989,
+  "quarantine": {
+    "costo_invalido": 211
+  }
+}

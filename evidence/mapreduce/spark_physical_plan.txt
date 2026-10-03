@@ -1,0 +1,73 @@
+== Physical Plan ==
+AdaptiveSparkPlan (11)
++- HashAggregate (10)
+   +- Exchange (9)
+      +- HashAggregate (8)
+         +- SortAggregate (7)
+            +- Sort (6)
+               +- Exchange (5)
+                  +- SortAggregate (4)
+                     +- Sort (3)
+                        +- Filter (2)
+                           +- Scan json  (1)
+
+
+(1) Scan json 
+Output [9]: [event_id#0, timestamp#1, org_id#2, service#4, metric#6, value#7, cost_usd_increment#9, carbon_kg#11, genai_tokens#12]
+Batched: false
+Location: InMemoryFileIndex [file:/Users/katiamenshikoff/Documents/ITBA/BIG DATA/cloud-provider-analytics/datalake/landing/usage_events_stream]
+PushedFilters: [IsNotNull(cost_usd_increment), IsNotNull(event_id), IsNotNull(org_id), IsNotNull(timestamp), GreaterThanOrEqual(cost_usd_increment,-0.01)]
+ReadSchema: struct<event_id:string,timestamp:string,org_id:string,service:string,metric:string,value:string,cost_usd_increment:double,carbon_kg:double,genai_tokens:double>
+
+(2) Filter
+Input [9]: [event_id#0, timestamp#1, org_id#2, service#4, metric#6, value#7, cost_usd_increment#9, carbon_kg#11, genai_tokens#12]
+Condition : ((((isnotnull(cost_usd_increment#9) AND isnotnull(event_id#0)) AND isnotnull(org_id#2)) AND isnotnull(timestamp#1)) AND (cost_usd_increment#9 >= -0.01))
+
+(3) Sort
+Input [9]: [event_id#0, timestamp#1, org_id#2, service#4, metric#6, value#7, cost_usd_increment#9, carbon_kg#11, genai_tokens#12]
+Arguments: [event_id#0 ASC NULLS FIRST], false, 0
+
+(4) SortAggregate
+Input [9]: [event_id#0, timestamp#1, org_id#2, service#4, metric#6, value#7, cost_usd_increment#9, carbon_kg#11, genai_tokens#12]
+Keys [1]: [event_id#0]
+Functions [8]: [partial_first(org_id#2, false), partial_first(service#4, false), partial_first(metric#6, false), partial_first(cost_usd_increment#9, false), partial_first(carbon_kg#11, false), partial_first(genai_tokens#12, false), partial_first(timestamp#1, false), partial_first(value#7, false)]
+Aggregate Attributes [16]: [first#88, valueSet#89, first#90, valueSet#91, first#92, valueSet#93, first#94, valueSet#95, first#96, valueSet#97, first#98, valueSet#99, first#100, valueSet#101, first#102, valueSet#103]
+Results [17]: [event_id#0, first#104, valueSet#105, first#106, valueSet#107, first#108, valueSet#109, first#110, valueSet#111, first#112, valueSet#113, first#114, valueSet#115, first#116, valueSet#117, first#118, valueSet#119]
+
+(5) Exchange
+Input [17]: [event_id#0, first#104, valueSet#105, first#106, valueSet#107, first#108, valueSet#109, first#110, valueSet#111, first#112, valueSet#113, first#114, valueSet#115, first#116, valueSet#117, first#118, valueSet#119]
+Arguments: hashpartitioning(event_id#0, 8), ENSURE_REQUIREMENTS, [plan_id=29]
+
+(6) Sort
+Input [17]: [event_id#0, first#104, valueSet#105, first#106, valueSet#107, first#108, valueSet#109, first#110, valueSet#111, first#112, valueSet#113, first#114, valueSet#115, first#116, valueSet#117, first#118, valueSet#119]
+Arguments: [event_id#0 ASC NULLS FIRST], false, 0
+
+(7) SortAggregate
+Input [17]: [event_id#0, first#104, valueSet#105, first#106, valueSet#107, first#108, valueSet#109, first#110, valueSet#111, first#112, valueSet#113, first#114, valueSet#115, first#116, valueSet#117, first#118, valueSet#119]
+Keys [1]: [event_id#0]
+Functions [8]: [first(org_id#2, false), first(service#4, false), first(metric#6, false), first(cost_usd_increment#9, false), first(carbon_kg#11, false), first(genai_tokens#12, false), first(timestamp#1, false), first(value#7, false)]
+Aggregate Attributes [8]: [first(org_id#2)()#50, first(service#4)()#54, first(metric#6)()#58, first(cost_usd_increment#9)()#64, first(carbon_kg#11)()#68, first(genai_tokens#12)()#70, first(timestamp#1)()#48, first(value#7)()#60]
+Results [8]: [first(org_id#2)()#50 AS org_id#51, lower(trim(first(service#4)()#54, None)) AS service#16, first(metric#6)()#58 AS metric#59, first(cost_usd_increment#9)()#64 AS cost_usd_increment#65, first(carbon_kg#11)()#68 AS carbon_kg#69, first(genai_tokens#12)()#70 AS genai_tokens#71, cast(cast(first(timestamp#1)()#48 as timestamp) as date) AS usage_date#15, try_cast(first(value#7)()#60 as double) AS value_num#17]
+
+(8) HashAggregate
+Input [8]: [org_id#51, service#16, metric#59, cost_usd_increment#65, carbon_kg#69, genai_tokens#71, usage_date#15, value_num#17]
+Keys [3]: [org_id#51, usage_date#15, service#16]
+Functions [7]: [partial_sum(cost_usd_increment#65), partial_sum(CASE WHEN (metric#59 = requests) THEN value_num#17 ELSE 0.0 END), partial_sum(CASE WHEN (metric#59 = cpu_hours) THEN value_num#17 ELSE 0.0 END), partial_sum(CASE WHEN (metric#59 = storage_gb_hours) THEN value_num#17 ELSE 0.0 END), partial_sum(coalesce(genai_tokens#71, 0.0)), partial_sum(coalesce(carbon_kg#69, 0.0)), partial_count(1)]
+Aggregate Attributes [7]: [sum#74, sum#75, sum#76, sum#77, sum#78, sum#79, count#80L]
+Results [10]: [org_id#51, usage_date#15, service#16, sum#81, sum#82, sum#83, sum#84, sum#85, sum#86, count#87L]
+
+(9) Exchange
+Input [10]: [org_id#51, usage_date#15, service#16, sum#81, sum#82, sum#83, sum#84, sum#85, sum#86, count#87L]
+Arguments: hashpartitioning(org_id#51, usage_date#15, service#16, 8), ENSURE_REQUIREMENTS, [plan_id=34]
+
+(10) HashAggregate
+Input [10]: [org_id#51, usage_date#15, service#16, sum#81, sum#82, sum#83, sum#84, sum#85, sum#86, count#87L]
+Keys [3]: [org_id#51, usage_date#15, service#16]
+Functions [7]: [sum(cost_usd_increment#65), sum(CASE WHEN (metric#59 = requests) THEN value_num#17 ELSE 0.0 END), sum(CASE WHEN (metric#59 = cpu_hours) THEN value_num#17 ELSE 0.0 END), sum(CASE WHEN (metric#59 = storage_gb_hours) THEN value_num#17 ELSE 0.0 END), sum(coalesce(genai_tokens#71, 0.0)), sum(coalesce(carbon_kg#69, 0.0)), count(1)]
+Aggregate Attributes [7]: [sum(cost_usd_increment#65)#42, sum(CASE WHEN (metric#59 = requests) THEN value_num#17 ELSE 0.0 END)#43, sum(CASE WHEN (metric#59 = cpu_hours) THEN value_num#17 ELSE 0.0 END)#44, sum(CASE WHEN (metric#59 = storage_gb_hours) THEN value_num#17 ELSE 0.0 END)#45, sum(coalesce(genai_tokens#71, 0.0))#46, sum(coalesce(carbon_kg#69, 0.0))#47, count(1)#41L]
+Results [10]: [org_id#51, usage_date#15, service#16, sum(cost_usd_increment#65)#42 AS cost_usd#18, sum(CASE WHEN (metric#59 = requests) THEN value_num#17 ELSE 0.0 END)#43 AS requests#19, sum(CASE WHEN (metric#59 = cpu_hours) THEN value_num#17 ELSE 0.0 END)#44 AS cpu_hours#20, sum(CASE WHEN (metric#59 = storage_gb_hours) THEN value_num#17 ELSE 0.0 END)#45 AS storage_gb_hours#21, sum(coalesce(genai_tokens#71, 0.0))#46 AS genai_tokens#22, sum(coalesce(carbon_kg#69, 0.0))#47 AS carbon_kg#23, count(1)#41L AS events#24L]
+
+(11) AdaptiveSparkPlan
+Output [10]: [org_id#51, usage_date#15, service#16, cost_usd#18, requests#19, cpu_hours#20, storage_gb_hours#21, genai_tokens#22, carbon_kg#23, events#24L]
+Arguments: isFinalPlan=false
+

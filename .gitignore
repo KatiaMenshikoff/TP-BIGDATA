@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.env
+secure-connect-*.zip
+# Datos: Landing se obtiene con scripts/setup_landing.sh; las zonas derivadas se regeneran
+datalake/

@@ -1,0 +1,8 @@
+flowchart LR
+  subgraph J1[Job 1 · Calidad + Dedup]
+    M1[Map<br/>parse JSON · cast value<br/>Q01/Q02 → quarantine<br/>emit event_id, evento] --> S1[Shuffle<br/>hash event_id] --> R1[Reduce<br/>1 evento por event_id<br/>el de menor ts]
+  end
+  subgraph J2[Job 2 · Agregación diaria]
+    M2[Map<br/>emit org,date,service →<br/>cost, requests, cpu, gb_h,<br/>tokens, carbon, 1] --> C2[Combiner<br/>suma parcial por split] --> S2[Shuffle<br/>hash clave % R] --> R2[Reduce<br/>suma final]
+  end
+  IN[(120 splits JSONL)] --> J1 -->|HDFS intermedio| J2 --> OUT[(org_daily_usage_by_service)]

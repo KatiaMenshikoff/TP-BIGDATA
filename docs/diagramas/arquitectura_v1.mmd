@@ -1,0 +1,66 @@
+flowchart TB
+  subgraph SRC["1 · Fuentes"]
+    direction LR
+    S4["JSONL usage_events_stream<br/>120 micro-archivos · v1/v2"]
+    S1["CSV maestros<br/>orgs · users · resources"]
+    S2["CSV operativos<br/>tickets · marketing · NPS"]
+    S3["CSV billing_monthly"]
+  end
+
+  L[("2 · Landing<br/>raw inmutable<br/>+ manifest SHA-256")]
+
+  subgraph ING["3 · Ingesta (PySpark)"]
+    direction LR
+    T1["STREAMING<br/>Structured Streaming<br/>esquema explícito · watermark<br/>dedup event_id · checkpoint"]
+    B1["BATCH diario / mensual<br/>spark.read.schema · CSV<br/>dedup por clave natural"]
+  end
+
+  subgraph DL["4 · Data Lake · Parquet particionado por fecha"]
+    direction LR
+    BR[("Bronze<br/>tipado + ingest_ts,<br/>source_file, run_id")]
+    SV[("Silver<br/>conformado · v1/v2<br/>joins dims · SCD2")]
+    GD[("Gold<br/>marts FinOps ·<br/>Soporte · Producto")]
+    Q[("quarantine<br/>inválidos + rule_id")]
+    BR -->|reglas de calidad| SV --> GD
+    BR -.-> Q
+    SV -.-> Q
+  end
+
+  C[("5 · Serving<br/>Cassandra / AstraDB<br/>keyspace cpa · query-first")]
+
+  subgraph USE["6 · Consumo"]
+    direction LR
+    U1["FinOps: costo, revenue,<br/>anomalías"]
+    U2["Soporte: tickets, SLA, CSAT"]
+    U3["Producto: uso, GenAI, carbono"]
+    U4["Analítica / ML<br/>z robusto MAD"]
+  end
+
+  S4 --> L
+  S1 & S2 & S3 --> L
+  L -->|eventos| T1
+  L -->|CSV| B1
+  T1 --> BR
+  B1 --> BR
+  GD -->|foreachBatch · upsert por PK| C
+  C --> U1 & U2 & U3
+  GD --> U4
+
+  subgraph TX["Capacidades transversales"]
+    direction LR
+    G1["Gobierno<br/>owners · diccionario · linaje run_id"]
+    G2["Calidad<br/>Q01–Q11 · quarantine · métricas"]
+    G3["Seguridad<br/>secretos en .env · hash email · mínimo privilegio"]
+    G4["Observabilidad<br/>_metadata/run_log · query progress"]
+  end
+  G1 ~~~ G2 ~~~ G3 ~~~ G4
+  USE ~~~ TX
+
+  classDef stream fill:#fde8d7,stroke:#d9822b,color:#222
+  classDef batch fill:#dbe9f6,stroke:#2b6cb0,color:#222
+  classDef store fill:#eef5ea,stroke:#4a7c3a,color:#222
+  classDef bad fill:#fbe3e3,stroke:#c53030,color:#222
+  class S4,T1 stream
+  class S1,S2,S3,B1 batch
+  class L,BR,SV,GD,C store
+  class Q bad

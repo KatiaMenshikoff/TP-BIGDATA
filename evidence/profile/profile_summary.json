@@ -1,0 +1,899 @@
+{
+  "csv": {
+    "customers_orgs.csv": {
+      "rows": 80,
+      "cols": 11,
+      "bytes": 7746,
+      "key": [
+        "org_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_xaji0y6d",
+            "org_pbhsahxt",
+            "org_hv3a3zmf",
+            "org_8mdd4v30"
+          ]
+        },
+        {
+          "column": "org_name",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "Nimbus Labs 0",
+            "Nova Tech 1",
+            "Gamma Data 2",
+            "Apex Data 3"
+          ]
+        },
+        {
+          "column": "industry",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 10,
+          "examples": [
+            "Education",
+            "Media",
+            "Manufacturing",
+            "E-commerce"
+          ]
+        },
+        {
+          "column": "hq_region",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 7,
+          "examples": [
+            "sa-east",
+            "us-east",
+            "eu-central",
+            "us-west"
+          ]
+        },
+        {
+          "column": "plan_tier",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 4,
+          "examples": [
+            "standard",
+            "pro",
+            "free",
+            "enterprise"
+          ]
+        },
+        {
+          "column": "is_enterprise",
+          "inferred_type": "boolean",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 2,
+          "examples": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "column": "signup_date",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 40,
+          "examples": [
+            "2025-05-26",
+            "2025-06-16",
+            "2025-05-12",
+            "2025-05-30"
+          ],
+          "min": "2025-05-04",
+          "max": "2025-07-02"
+        },
+        {
+          "column": "sales_rep",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 5,
+          "examples": [
+            "rep_c",
+            "rep_d",
+            "rep_b",
+            "rep_e"
+          ]
+        },
+        {
+          "column": "lifecycle_stage",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 5,
+          "examples": [
+            "churned",
+            "lead",
+            "active",
+            "at_risk"
+          ]
+        },
+        {
+          "column": "marketing_source",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 5,
+          "examples": [
+            "partner",
+            "event",
+            "organic",
+            "ads"
+          ]
+        },
+        {
+          "column": "nps_score",
+          "inferred_type": "numeric",
+          "nulls": 11,
+          "null_pct": 13.75,
+          "distinct": 45,
+          "examples": [
+            "-3.0",
+            "4.0",
+            "12.0",
+            "17.0"
+          ],
+          "min": -38.0,
+          "max": 101.0,
+          "mean": 18.6667
+        }
+      ],
+      "findings": [
+        "nps_score nulo en 11 orgs; fuera de [-100,100]: 1",
+        "plan_tier vs is_enterprise inconsistentes: 25 de 80"
+      ]
+    },
+    "users.csv": {
+      "rows": 800,
+      "cols": 7,
+      "bytes": 70683,
+      "key": [
+        "user_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "user_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 800,
+          "examples": [
+            "user_9tze5r5u",
+            "user_qpgb7r3o",
+            "user_cwbfuk9e",
+            "user_1v2isqp4"
+          ]
+        },
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_3t60rjiw",
+            "org_afeyuhz1",
+            "org_ykl1cq99",
+            "org_g8sbi4q2"
+          ]
+        },
+        {
+          "column": "email",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 800,
+          "examples": [
+            "user_9tze5r5u@example.com",
+            "user_qpgb7r3o@example.com",
+            "user_cwbfuk9e@example.com",
+            "user_1v2isqp4@example.com"
+          ]
+        },
+        {
+          "column": "role",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 6,
+          "examples": [
+            "devops",
+            "developer",
+            "ml_engineer",
+            "data_engineer"
+          ]
+        },
+        {
+          "column": "active",
+          "inferred_type": "boolean",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 2,
+          "examples": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "column": "created_at",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 100,
+          "examples": [
+            "2025-07-10",
+            "2025-07-15",
+            "2025-06-12",
+            "2025-05-12"
+          ],
+          "min": "2025-05-04",
+          "max": "2025-08-11"
+        },
+        {
+          "column": "last_login",
+          "inferred_type": "date",
+          "nulls": 139,
+          "null_pct": 17.38,
+          "distinct": 110,
+          "examples": [
+            "2025-08-10",
+            "2025-07-26",
+            "2025-08-11",
+            "2025-06-20"
+          ],
+          "min": "2025-05-14",
+          "max": "2025-08-31"
+        }
+      ],
+      "findings": [
+        "last_login nulo: 139; last_login < created_at: 232",
+        "email es PII -> enmascarar/hashear en Silver"
+      ]
+    },
+    "resources.csv": {
+      "rows": 400,
+      "cols": 7,
+      "bytes": 36703,
+      "key": [
+        "resource_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "resource_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 400,
+          "examples": [
+            "res_eubfn9kr",
+            "res_fvb66h3r",
+            "res_cbrlqmn4",
+            "res_ew1yf0dw"
+          ]
+        },
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_pnsm43d8",
+            "org_i7p5tb94",
+            "org_d14ve92m",
+            "org_pja1wj0t"
+          ]
+        },
+        {
+          "column": "service",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 6,
+          "examples": [
+            "compute",
+            "database",
+            "storage",
+            "networking"
+          ]
+        },
+        {
+          "column": "region",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 7,
+          "examples": [
+            "sa-east",
+            "ap-south",
+            "eu-central",
+            "us-west"
+          ]
+        },
+        {
+          "column": "created_at",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 106,
+          "examples": [
+            "2025-08-14",
+            "2025-06-05",
+            "2025-08-10",
+            "2025-06-02"
+          ],
+          "min": "2025-05-04",
+          "max": "2025-08-21"
+        },
+        {
+          "column": "state",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 3,
+          "examples": [
+            "running",
+            "stopped",
+            "terminated"
+          ]
+        },
+        {
+          "column": "tags_json",
+          "inferred_type": "string",
+          "nulls": 83,
+          "null_pct": 20.75,
+          "distinct": 159,
+          "examples": [
+            "[\"env:prod\"]",
+            "[\"env:prod\", \"pii:true\"]",
+            "[\"pii:true\"]",
+            "[\"env:prod\", \"costcenter:beta\"]"
+          ]
+        }
+      ],
+      "findings": [
+        "tags_json nulo: 83; tags 'pii:true': 85"
+      ]
+    },
+    "support_tickets.csv": {
+      "rows": 1000,
+      "cols": 8,
+      "bytes": 70945,
+      "key": [
+        "ticket_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "ticket_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 1000,
+          "examples": [
+            "tkt_zjrumxqw",
+            "tkt_3b4nthzm",
+            "tkt_32hzs32d",
+            "tkt_1jqbexgf"
+          ]
+        },
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_x7eedtjv",
+            "org_gv0e38da",
+            "org_9mx2x18h",
+            "org_1swjckjl"
+          ]
+        },
+        {
+          "column": "category",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 6,
+          "examples": [
+            "performance",
+            "security",
+            "availability",
+            "usability"
+          ]
+        },
+        {
+          "column": "severity",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 4,
+          "examples": [
+            "low",
+            "critical",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "column": "created_at",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 115,
+          "examples": [
+            "2025-07-02",
+            "2025-07-21",
+            "2025-07-03",
+            "2025-07-18"
+          ],
+          "min": "2025-05-09",
+          "max": "2025-08-31"
+        },
+        {
+          "column": "resolved_at",
+          "inferred_type": "date",
+          "nulls": 240,
+          "null_pct": 24.0,
+          "distinct": 125,
+          "examples": [
+            "2025-07-08",
+            "2025-07-22",
+            "2025-07-05",
+            "2025-07-31"
+          ],
+          "min": "2025-05-10",
+          "max": "2025-09-19"
+        },
+        {
+          "column": "csat",
+          "inferred_type": "numeric",
+          "nulls": 254,
+          "null_pct": 25.4,
+          "distinct": 8,
+          "examples": [
+            "4.0",
+            "3.0",
+            "5.0",
+            "2.0"
+          ],
+          "min": 0.0,
+          "max": 7.0,
+          "mean": 3.3016
+        },
+        {
+          "column": "sla_breached",
+          "inferred_type": "boolean",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 2,
+          "examples": [
+            "False",
+            "True"
+          ]
+        }
+      ],
+      "findings": [
+        "csat nulo: 254; fuera de [1,5]: 40",
+        "tickets abiertos (resolved_at nulo): 240; resolved < created: 0",
+        "sla_breached=True: 95; critical: 56"
+      ]
+    },
+    "marketing_touches.csv": {
+      "rows": 1500,
+      "cols": 7,
+      "bytes": 101998,
+      "key": [
+        "touch_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "touch_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 1500,
+          "examples": [
+            "mkt_7322hr5s",
+            "mkt_osc0whs1",
+            "mkt_4eci9rtj",
+            "mkt_6u5a2x54"
+          ]
+        },
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_zbikcidk",
+            "org_5iqvnb4g",
+            "org_okep7y6w",
+            "org_ohp6vz41"
+          ]
+        },
+        {
+          "column": "campaign",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 6,
+          "examples": [
+            "security_week",
+            "webinar_finops",
+            "upgrade_enterprise",
+            "genai_launch"
+          ]
+        },
+        {
+          "column": "channel",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 4,
+          "examples": [
+            "ads",
+            "email",
+            "in_app",
+            "event"
+          ]
+        },
+        {
+          "column": "timestamp",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 120,
+          "examples": [
+            "2025-08-26",
+            "2025-07-23",
+            "2025-06-21",
+            "2025-08-09"
+          ],
+          "min": "2025-05-04",
+          "max": "2025-08-31"
+        },
+        {
+          "column": "clicked",
+          "inferred_type": "boolean",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 2,
+          "examples": [
+            "False",
+            "True"
+          ]
+        },
+        {
+          "column": "converted",
+          "inferred_type": "boolean",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 2,
+          "examples": [
+            "False",
+            "True"
+          ]
+        }
+      ],
+      "findings": [
+        "converted=True sin clicked=True: 96"
+      ]
+    },
+    "nps_surveys.csv": {
+      "rows": 92,
+      "cols": 4,
+      "bytes": 3977,
+      "key": [
+        "org_id",
+        "survey_date"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 60,
+          "examples": [
+            "org_xaji0y6d",
+            "org_hv3a3zmf",
+            "org_8mdd4v30",
+            "org_t9nt3w5u"
+          ]
+        },
+        {
+          "column": "survey_date",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 57,
+          "examples": [
+            "2025-08-22",
+            "2025-06-13",
+            "2025-06-18",
+            "2025-05-24"
+          ],
+          "min": "2025-05-24",
+          "max": "2025-08-31"
+        },
+        {
+          "column": "nps_score",
+          "inferred_type": "numeric",
+          "nulls": 19,
+          "null_pct": 20.65,
+          "distinct": 41,
+          "examples": [
+            "11.0",
+            "6.0",
+            "15.0",
+            "19.0"
+          ],
+          "min": -16.0,
+          "max": 68.0,
+          "mean": 26.1644
+        },
+        {
+          "column": "comment",
+          "inferred_type": "string",
+          "nulls": 10,
+          "null_pct": 10.87,
+          "distinct": 6,
+          "examples": [
+            "Complex billing",
+            "Love genAI features",
+            "Missing features",
+            "Stable but slow"
+          ]
+        }
+      ],
+      "findings": [
+        "nps_score nulo: 19; comment nulo: 10"
+      ]
+    },
+    "billing_monthly.csv": {
+      "rows": 240,
+      "cols": 8,
+      "bytes": 15854,
+      "key": [
+        "invoice_id"
+      ],
+      "duplicated_key": 0,
+      "columns": [
+        {
+          "column": "invoice_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 240,
+          "examples": [
+            "inv_nym31sk0",
+            "inv_540sejok",
+            "inv_ilp4vn2v",
+            "inv_27nls4sz"
+          ]
+        },
+        {
+          "column": "org_id",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 80,
+          "examples": [
+            "org_xaji0y6d",
+            "org_pbhsahxt",
+            "org_hv3a3zmf",
+            "org_8mdd4v30"
+          ]
+        },
+        {
+          "column": "month",
+          "inferred_type": "date",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 3,
+          "examples": [
+            "2025-06-01",
+            "2025-07-01",
+            "2025-08-01"
+          ],
+          "min": "2025-06-01",
+          "max": "2025-08-01"
+        },
+        {
+          "column": "subtotal",
+          "inferred_type": "numeric",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 240,
+          "examples": [
+            "1133.34",
+            "619.17",
+            "540.79",
+            "520.91"
+          ],
+          "min": -1671.83,
+          "max": 2237.39,
+          "mean": 717.2336
+        },
+        {
+          "column": "credits",
+          "inferred_type": "numeric",
+          "nulls": 137,
+          "null_pct": 57.08,
+          "distinct": 100,
+          "examples": [
+            "25.93",
+            "4.78",
+            "11.43",
+            "14.58"
+          ],
+          "min": 0.0,
+          "max": 79.06,
+          "mean": 19.0997
+        },
+        {
+          "column": "taxes",
+          "inferred_type": "numeric",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 240,
+          "examples": [
+            "238.0",
+            "130.03",
+            "113.57",
+            "109.39"
+          ],
+          "min": 13.18,
+          "max": 469.85,
+          "mean": 171.3575
+        },
+        {
+          "column": "currency",
+          "inferred_type": "string",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 3,
+          "examples": [
+            "USD",
+            "ARS",
+            "EUR"
+          ]
+        },
+        {
+          "column": "exchange_rate_to_usd",
+          "inferred_type": "numeric",
+          "nulls": 0,
+          "null_pct": 0.0,
+          "distinct": 208,
+          "examples": [
+            "0.97684",
+            "1.00331",
+            "0.0016",
+            "0.00147"
+          ],
+          "min": 0.00133,
+          "max": 1.19808,
+          "mean": 0.7986
+        }
+      ],
+      "findings": [
+        "credits nulo: 137 (se asume 0)",
+        "subtotal negativo: 13; taxes negativo: 0",
+        "currency=ARS: 51 facturas, exchange_rate_to_usd en [0.00133, 0.00162]",
+        "currency=EUR: 29 facturas, exchange_rate_to_usd en [0.9981, 1.19808]",
+        "currency=USD: 160 facturas, exchange_rate_to_usd en [0.85463, 1.11791]",
+        "orgs con m\u00e1s de una moneda: 50"
+      ]
+    }
+  },
+  "usage_events_stream": {
+    "files": 120,
+    "bad_json_lines": 0,
+    "rows": 43200,
+    "distinct_event_id": 43200,
+    "duplicated_event_id": 0,
+    "rows_per_file_avg": 360.0,
+    "bytes_total": 12927515,
+    "ts_min": "2025-07-03 00:02:00+00:00",
+    "ts_max": "2025-08-31 23:58:00+00:00",
+    "days": 60,
+    "events_per_day_avg": 720.0,
+    "files_spanning_full_range": 120,
+    "key_sets": {
+      "carbon_kg,cost_usd_increment,event_id,metric,org_id,region,resource_id,schema_version,service,timestamp,unit,value": 29268,
+      "cost_usd_increment,event_id,metric,org_id,region,resource_id,schema_version,service,timestamp,unit,value": 10800,
+      "carbon_kg,cost_usd_increment,event_id,genai_tokens,metric,org_id,region,resource_id,schema_version,service,timestamp,unit,value": 3132
+    },
+    "raw_value_types": {
+      "NoneType": 877,
+      "float": 41014,
+      "str": 1309
+    },
+    "value_null": 877,
+    "unit_null": 2075,
+    "unit_inconsistent_with_metric": 0,
+    "schema_version_counts": {
+      "2": 32400,
+      "1": 10800
+    },
+    "schema_v2_first_ts": "2025-07-18 00:01:00+00:00",
+    "schema_v1_last_ts": "2025-07-17 23:56:00+00:00",
+    "genai_tokens_non_null": 3132,
+    "genai_tokens_services": [
+      "genai"
+    ],
+    "carbon_kg_non_null": 32400,
+    "cost_negative": 216,
+    "cost_below_minus_0_01": 211,
+    "cost_stats": {
+      "count": 43200.0,
+      "mean": 3.4128,
+      "std": 7.9236,
+      "min": -154.4608,
+      "50%": 1.0044,
+      "90%": 9.9971,
+      "99%": 16.7175,
+      "99.9%": 132.2659,
+      "max": 317.4308
+    },
+    "cost_outliers_robust_z_gt_3_5": 312,
+    "services": {
+      "compute": 12498,
+      "storage": 7614,
+      "database": 7419,
+      "networking": 6921,
+      "analytics": 4590,
+      "genai": 4158
+    },
+    "regions": {
+      "ap-northeast": 7773,
+      "us-east": 7566,
+      "us-west": 6384,
+      "sa-east": 6270,
+      "ap-south": 5943,
+      "eu-west": 4854,
+      "eu-central": 4410
+    },
+    "metrics": {
+      "requests": 19512,
+      "storage_gb_hours": 12996,
+      "cpu_hours": 10692
+    },
+    "orgs": 80,
+    "resources": 400,
+    "findings": [
+      "43200 eventos en 120 archivos (~360.0 por archivo); 0 event_id duplicados en este corte",
+      "120 de 120 archivos contienen eventos de todo el rango temporal -> llegada desordenada (late data)",
+      "value: 1309 como string, 877 nulos",
+      "unit nulo en 2075 eventos (derivable desde metric); inconsistencias metric/unit: 0",
+      "schema_version=1 hasta 2025-07-17 23:56:00+00:00, schema_version=2 desde 2025-07-18 00:01:00+00:00",
+      "genai_tokens s\u00f3lo en v2 y servicios ['genai'] (3132 eventos); carbon_kg en 32400 eventos v2",
+      "cost_usd_increment negativo: 216 (< -0.01: 211); outliers |z robusto por servicio+m\u00e9trica|>3.5: 312"
+    ]
+  }
+}
