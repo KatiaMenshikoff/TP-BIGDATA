@@ -4,7 +4,7 @@
 Big Data · ITBA · 2C 2026 · Prof. Diego Mosquera<br>
 Autora: Katia Menshikoff · Legajo 64396 (trabajo individual) · Versión 1.0 · Fecha de entrega: 05/10/2026
 
-> Este documento cubre los 12 puntos del alcance obligatorio (consigna §5.2). Cada sección indica a qué punto responde.
+> Este documento cubre los 12 puntos del alcance obligatorio (Sección 5.2 de la consigna). Cada sección indica a qué punto responde.
 > Todas las cifras sobre los datos salen de `evidence/profile/profile_report.md`, que genera `src/profiling/profile_landing.py` y se puede volver a generar.
 
 ---
@@ -18,12 +18,12 @@ Autora: Katia Menshikoff · Legajo 64396 (trabajo individual) · Versión 1.0 ·
 | Data Lake | Landing (inmutable) → Bronze → Silver → Gold en **Parquet**, más `quarantine/`, `_checkpoints/` y `_metadata/`. |
 | Procesamiento | PySpark 4.x (DataFrame API) en Google Colab / local `local[*]`. |
 | Serving | Cassandra/AstraDB con tablas *query-first*, una por consulta obligatoria. |
-| Hallazgo crítico | Los eventos llegan **desordenados**: cada archivo trae eventos de los 60 días. Con un watermark de 1 día se descartaría el **97,5 %** de los eventos. Ver §8.3 y la decisión D-05. |
+| Hallazgo crítico | Los eventos llegan **desordenados**: cada archivo trae eventos de los 60 días. Con un watermark de 1 día se descartaría el **97,5 %** de los eventos. Ver Sección 8.3 y la decisión D-05. |
 | Evidencia | Perfil reproducible de las 8 fuentes y un job MapReduce de referencia cuya salida coincide al 100 % con su versión Spark (11.050 claves). |
 
 ---
 
-## 1. Interpretación del problema, usuarios, preguntas y objetivos medibles (§5.2.1)
+## 1. Interpretación del problema, usuarios, preguntas y objetivos medibles (consigna, Sección 5.2.1)
 
 ### 1.1 Problema
 El área de datos del proveedor cloud recibe datos crudos con nulos, tipos ambiguos, costos negativos, outliers y un cambio de esquema a mitad del histórico (v1 → v2 el 18/07/2025, que agrega `carbon_kg` y `genai_tokens`). Hoy no existe una vista única y confiable que combine **uso casi en tiempo real** con **maestros y facturación**. El proyecto debe ingerir, limpiar, conformar y publicar esos datos para el consumo analítico.
@@ -51,9 +51,9 @@ El área de datos del proveedor cloud recibe datos crudos con nulos, tipos ambig
 
 ---
 
-## 2. Justificación de Big Data con las 5V (§5.2.2)
+## 2. Justificación de Big Data con las 5V (consigna, Sección 5.2.2)
 
-Primero, honestidad metodológica (Clase 1, *“¿Cuándo NO hace falta Big Data?”*): **la muestra entregada (13 MB, 43.200 eventos) entra en memoria y pandas la procesa sin problemas.** La justificación no se apoya en la muestra sino en el **sistema real que la muestra representa**. Por eso se usa el mismo código Spark en modo local, y escala sin reescribirse.
+**La muestra entregada (13 MB, 43.200 eventos) entra en memoria y pandas la procesa sin problemas.** La justificación no se apoya en la muestra sino en el **sistema real que la muestra representa**. Por eso se usa el mismo código Spark en modo local, y escala sin reescribirse.
 
 | V | Evidencia en la muestra | Proyección a un proveedor real | Implicancia de arquitectura |
 |---|---|---|---|
@@ -67,7 +67,7 @@ También es relevante la **variabilidad**: la distribución cambia en el tiempo 
 
 ---
 
-## 3. Inventario y perfil inicial de fuentes (§5.2.3)
+## 3. Inventario y perfil inicial de fuentes (consigna, Sección 5.2.3)
 
 Detalle completo por columna en [`evidence/profile/profile_report.md`](../evidence/profile/profile_report.md) y diccionario en [`02_inventario_fuentes.md`](02_inventario_fuentes.md).
 
@@ -88,7 +88,7 @@ Detalle completo por columna en [`evidence/profile/profile_report.md`](../eviden
 
 ---
 
-## 4. Arquitectura de alto nivel v1 (§5.2.4)
+## 4. Arquitectura de alto nivel v1 (consigna, Sección 5.2.4)
 
 <img src="diagramas/arquitectura_v1.png" alt="Arquitectura v1" width="78%">
 
@@ -108,7 +108,7 @@ _Fuente editable: [`diagramas/arquitectura_v1.mmd`](diagramas/arquitectura_v1.mm
 
 ---
 
-## 5. Patrón elegido y justificación (§5.2.5)
+## 5. Patrón elegido y justificación (consigna, Sección 5.2.5)
 
 **Decisión: Lambda con una única base de código de transformaciones (D-01).**
 
@@ -126,28 +126,28 @@ _Fuente editable: [`diagramas/arquitectura_v1.mmd`](diagramas/arquitectura_v1.mm
 
 ---
 
-## 6. Mapeo de requisitos a componentes y relación 5V ↔ decisiones (§5.2.6)
+## 6. Mapeo de requisitos a componentes y relación 5V ↔ decisiones (consigna, Sección 5.2.6)
 
 Leyenda: ● responsable principal · ○ participa.
 Componentes: **LND** Landing · **BIN** ingesta batch · **SIN** ingesta streaming · **BRZ** Bronze · **SLV** Silver · **GLD** Gold · **QTN** quarantine · **CAS** Cassandra · **META** metadatos/run_log · **CFG** config/secretos.
 
 | ID | Requisito (origen) | LND | BIN | SIN | BRZ | SLV | GLD | QTN | CAS | META | CFG | Evidencia prevista |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| R01 | Datos crudos inmutables (§3.2) | ● | | | | | | | | ○ | | `landing_manifest.sha256` sin cambios |
-| R02 | Ingesta batch CSV → Bronze Parquet particionado, esquema explícito, columnas técnicas (§4.4) | ○ | ● | | ● | | | | | ○ | ○ | rutas + `printSchema` |
-| R03 | Streaming JSONL con esquema, watermark, dedup `event_id`, late data, checkpoint (§4.4) | ○ | | ● | ● | | | ○ | | ○ | ○ | `_checkpoints/`, query progress |
-| R04 | Evolución de esquema v1/v2 (§3.2) | | | ○ | ○ | ● | | | | | | conteos por `schema_version` |
-| R05 | Tipos ambiguos con cast y fallback controlado (§3.2) | | ○ | ○ | ○ | ● | | ○ | | | | `value_raw` vs `value` |
-| R06 | Reglas de calidad + quarantine (§4.4) | | | | ○ | ● | | ● | | ○ | ○ | muestras de quarantine |
-| R07 | Normalización y joins con dimensiones (§4.4 Silver) | | | | | ● | | | | | | tablas Silver |
+| R01 | Datos crudos inmutables (consigna, Sección 3.2) | ● | | | | | | | | ○ | | `landing_manifest.sha256` sin cambios |
+| R02 | Ingesta batch CSV → Bronze Parquet particionado, esquema explícito, columnas técnicas (consigna, Sección 4.4) | ○ | ● | | ● | | | | | ○ | ○ | rutas + `printSchema` |
+| R03 | Streaming JSONL con esquema, watermark, dedup `event_id`, late data, checkpoint (consigna, Sección 4.4) | ○ | | ● | ● | | | ○ | | ○ | ○ | `_checkpoints/`, query progress |
+| R04 | Evolución de esquema v1/v2 (consigna, Sección 3.2) | | | ○ | ○ | ● | | | | | | conteos por `schema_version` |
+| R05 | Tipos ambiguos con cast y fallback controlado (consigna, Sección 3.2) | | ○ | ○ | ○ | ● | | ○ | | | | `value_raw` vs `value` |
+| R06 | Reglas de calidad + quarantine (consigna, Sección 4.4) | | | | ○ | ● | | ● | | ○ | ○ | muestras de quarantine |
+| R07 | Normalización y joins con dimensiones (consigna, Sección 4.4, Silver) | | | | | ● | | | | | | tablas Silver |
 | R08 | Features: `daily_cost_usd`, `requests`, `cpu_hours`, `storage_gb_hours`, `genai_tokens`, `carbon_kg` | | | | | ○ | ● | | | | | mart diario |
 | R09 | Anomalías de costo (z robusto / MAD / percentiles) | | | | | ○ | ● | | | | ○ | `cost_anomaly_mart` |
-| R10 | Marts FinOps, Soporte, Producto (§7.3) | | | | | | ● | | ○ | | | 5 marts |
-| R11 | Serving query-first en Cassandra (§4.4) | | | | | | ○ | | ● | | ○ | CQL + capturas |
-| R12 | Idempotencia (§4.4) | | ○ | ● | ● | ● | ● | | ● | ○ | | conteos antes/después |
-| R13 | Performance: particiones, coalesce, tamaños (§4.4) | | ○ | ○ | ● | ● | ● | | | ○ | | tamaños por partición |
-| R14 | Gobierno: metadatos, linaje, owners, seguridad (§4.4) | ○ | | | ○ | ○ | ○ | | ○ | ● | ● | `run_log`, `DECISIONS.md` |
-| R15 | Objetivos O1–O7 (§1.3) | | ○ | ● | | | ○ | | ● | ● | | ver §1.3 |
+| R10 | Marts FinOps, Soporte, Producto (consigna, Sección 7.3) | | | | | | ● | | ○ | | | 5 marts |
+| R11 | Serving query-first en Cassandra (consigna, Sección 4.4) | | | | | | ○ | | ● | | ○ | CQL + capturas |
+| R12 | Idempotencia (consigna, Sección 4.4) | | ○ | ● | ● | ● | ● | | ● | ○ | | conteos antes/después |
+| R13 | Performance: particiones, coalesce, tamaños (consigna, Sección 4.4) | | ○ | ○ | ● | ● | ● | | | ○ | | tamaños por partición |
+| R14 | Gobierno: metadatos, linaje, owners, seguridad (consigna, Sección 4.4) | ○ | | | ○ | ○ | ○ | | ○ | ● | ● | `run_log`, `DECISIONS.md` |
+| R15 | Objetivos O1–O7 (Sección 1.3) | | ○ | ● | | | ○ | | ● | ● | | ver Sección 1.3 |
 
 **Relación entre las 5V y las decisiones**
 
@@ -161,7 +161,7 @@ Componentes: **LND** Landing · **BIN** ingesta batch · **SIN** ingesta streami
 
 ---
 
-## 7. Diseño del Data Lake (§5.2.7)
+## 7. Diseño del Data Lake (consigna, Sección 5.2.7)
 
 ### 7.1 Zonas, formato y reglas de promoción
 
@@ -195,16 +195,16 @@ datalake/
 | Silver | `dim_org` (SCD2), `dim_user`, `dim_resource` | entidad-versión | sin partición | overwrite | Tamaño chico; se usa en *broadcast join* |
 | Silver | `fact_tickets`, `fact_billing`, `fact_nps`, `fact_marketing` | fila | mes | overwrite dinámico | Volumen bajo |
 | Gold | `org_daily_usage_by_service` | org × día × servicio | `usage_date` | overwrite dinámico | Grano obligatorio (Entrega 2) |
-| Gold | `revenue_by_org_month` | org × mes | `month` | overwrite dinámico | §7.3 |
-| Gold | `cost_anomaly_mart` | org × día × servicio | `date` | overwrite dinámico | §7.3 |
-| Gold | `tickets_by_org_date` | org × día × severidad | `date` | overwrite dinámico | §7.3 |
-| Gold | `genai_tokens_by_org_date` | org × día | `date` | overwrite dinámico | §7.3 |
+| Gold | `revenue_by_org_month` | org × mes | `month` | overwrite dinámico | Consigna, Sección 7.3 |
+| Gold | `cost_anomaly_mart` | org × día × servicio | `date` | overwrite dinámico | Consigna, Sección 7.3 |
+| Gold | `tickets_by_org_date` | org × día × severidad | `date` | overwrite dinámico | Consigna, Sección 7.3 |
+| Gold | `genai_tokens_by_org_date` | org × día | `date` | overwrite dinámico | Consigna, Sección 7.3 |
 
 **Control de archivos chicos:** en la muestra, una partición diaria de eventos tiene ~720 filas, unos 25 KB en Parquet. Se aplica `coalesce(1)` por partición en Bronze/Silver/Gold para no generar cientos de *small files*. A escala real (~50 M eventos/día por partición) se pasaría a `repartition(n)` buscando archivos de 128–512 MB. No se particiona por `service` ni por `org_id`, porque multiplicaría por 6 y por 80 la cantidad de archivos.
 
 ### 7.3 Naming y convenciones
 - Todo en `snake_case`, en inglés para tablas y columnas (como la fuente) y en español para documentación.
-- Silver usa los prefijos `dim_` y `fact_`. Gold usa el nombre del mart de la consigna §7.3.
+- Silver usa los prefijos `dim_` y `fact_`. Gold usa el nombre del mart de la Sección 7.3 de la consigna.
 - Las columnas técnicas llevan prefijo fijo: `ingest_ts`, `source_file`, `run_id`, `record_hash`; en SCD2 se agregan `valid_from`, `valid_to`, `is_current`.
 - Fechas en UTC (`spark.sql.session.timeZone=UTC`, ver D-07); `event_ts` es el timestamp y `event_date` la fecha derivada.
 - Montos con sufijo de moneda: `*_usd`, `*_local`.
@@ -240,11 +240,11 @@ datalake/
 - **A nivel fila:** `ingest_ts`, `source_file` (`input_file_name()`), `run_id`, `schema_version` y `record_hash` (para SCD2 y para detectar cambios).
 - **A nivel corrida:** `_metadata/run_log` (Parquet) con `run_id`, etapa, tabla, `rows_in`, `rows_out`, `rows_quarantine`, duración, estado y versión de código (git SHA).
 - **Linaje:** cada tabla Gold documenta sus tablas Silver de origen en el diccionario. El `run_id` permite recorrer el camino Gold → Silver → Bronze → `source_file`.
-- **Owners:** cada dominio tiene un responsable (ver §11).
+- **Owners:** cada dominio tiene un responsable (ver Sección 11).
 
 ---
 
-## 8. Flujos de datos batch y streaming (§5.2.8)
+## 8. Flujos de datos batch y streaming (consigna, Sección 5.2.8)
 
 ### 8.1 Flujo batch (maestros, facturación, tickets, NPS, marketing)
 
@@ -292,7 +292,7 @@ A escala real, un watermark de 62 días no sería sostenible. Allí la deduplica
 
 ---
 
-## 9. Flujo batch de referencia con lógica MapReduce (§5.2.9)
+## 9. Flujo batch de referencia con lógica MapReduce (consigna, Sección 5.2.9)
 
 **Objetivo:** calcular el mart `org_daily_usage_by_service` (org × día × servicio) a partir de los eventos crudos.
 Código: `src/mapreduce/daily_usage_mapreduce.py` (simulación en Python puro de Hadoop MR) y `src/mapreduce/daily_usage_spark.py` (equivalente PySpark).
@@ -327,11 +327,11 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 
 **Validación cruzada:** la salida MapReduce y la de PySpark coinciden en las **11.050 claves** y en todas las métricas (diferencia máxima < 1e-4, por redondeo). El plan físico de Spark (`evidence/mapreduce/spark_physical_plan.txt`) muestra la misma estructura: `HashAggregate(partial_sum)` (el combiner) → `Exchange hashpartitioning` (el shuffle) → `HashAggregate(sum)` (el reduce). Además hay un `Exchange` previo para `dropDuplicates(event_id)` (el Job 1).
 
-**Lección:** en Hadoop, los dos jobs escriben su resultado intermedio a disco (HDFS replicado ×3). Spark ejecuta todo como un único DAG en memoria, que es la razón por la que elegimos Spark (Clase 3).
+**Lección:** en Hadoop, los dos jobs escriben su resultado intermedio a disco (HDFS replicado ×3). Spark ejecuta todo como un único DAG en memoria, que es la razón por la que elegimos Spark.
 
 ---
 
-## 10. Supuestos, riesgos, mitigaciones y decisiones abiertas (§5.2.10)
+## 10. Supuestos, riesgos, mitigaciones y decisiones abiertas (consigna, Sección 5.2.10)
 
 ### 10.1 Supuestos
 | ID | Supuesto |
@@ -350,9 +350,9 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 | K1 | Un watermark corto descarta casi todos los eventos (97,5 % con 1 día) | Alta | Alto | Watermark de 62 días + quarantine de tardíos + recomputo por fecha (D-05) |
 | K2 | Semántica de FX ambigua (USD con FX ≠ 1; ARS a 0,0015) | Alta | Alto | Regla Q08, supuesto S3 documentado, validar con el docente; FX parametrizable |
 | K3 | Colab es efímero: se pierden checkpoints y el lake | Alta | Medio | Lake y `_checkpoints` en Google Drive montado; script de *reset* |
-| K4 | Conectividad o credenciales de AstraDB fallan durante la demo | Media | Alto | Secure bundle + token por variables de entorno; plan B: Cassandra en Docker; capturas de respaldo (§8.4 de la consigna) |
+| K4 | Conectividad o credenciales de AstraDB fallan durante la demo | Media | Alto | Secure bundle + token por variables de entorno; plan B: Cassandra en Docker; capturas de respaldo (Sección 8.4 de la consigna) |
 | K5 | Desfase por zona horaria (verificado: Spark en hora local corrió fechas a 02/07 y generó 1.102 claves de más) | Alta | Medio | `spark.sql.session.timeZone=UTC` obligatorio en config (D-07) |
-| K6 | *Small files* por particionar de más | Media | Bajo | Particionar sólo por fecha + `coalesce` (§7.2) |
+| K6 | *Small files* por particionar de más | Media | Bajo | Particionar sólo por fecha + `coalesce` (Sección 7.2) |
 | K7 | PII (`email`, recursos con `pii:true`) expuesta en Gold | Media | Medio | Hash SHA-256 del email en Silver; no se publica en Gold ni en Cassandra |
 | K8 | Trabajo individual: carga horaria alta, curva de aprendizaje de Streaming/Cassandra y una sola persona como punto único de falla | Media | Alto | Spikes técnicos tempranos (streaming y AstraDB en las primeras 2 semanas de la E2); backlog obligatorio/deseable; consultas tempranas al docente |
 
@@ -366,7 +366,7 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 | A5 | Carga a Cassandra | Spark Cassandra Connector / `cassandra-driver` en `foreachBatch` | Driver en `foreachBatch` (más simple en Colab con AstraDB) |
 
 ### 10.4 Modelo de serving preliminar (*query-first*, a validar en la Entrega 2)
-| Consulta obligatoria (§7.4) | Tabla | PRIMARY KEY |
+| Consulta obligatoria (consigna, Sección 7.4) | Tabla | PRIMARY KEY |
 |---|---|---|
 | Q1 Costos y requests diarios por org y servicio en un rango de fechas | `usage_by_org_day_service` | `((org_id), usage_date, service)` |
 | Q2 Top-N servicios por costo acumulado en 14 días | `cost_14d_by_org_service` | `((org_id), cost_14d_usd, service)` — *clustering* DESC por costo |
@@ -376,10 +376,10 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 
 ---
 
-## 11. Estimación preliminar de esfuerzo, roles y recursos (§5.2.11)
+## 11. Estimación preliminar de esfuerzo, roles y recursos (consigna, Sección 5.2.11)
 
 ### 11.1 Roles
-El trabajo es **individual**: Katia Menshikoff (legajo 64396) asume todos los roles. Igual se separan las responsabilidades por rol, porque ordenan el trabajo y el backlog, y porque fijan quién es owner de cada dominio (gobierno, §7.6).
+El trabajo es **individual**: Katia Menshikoff (legajo 64396) asume todos los roles. Igual se separan las responsabilidades por rol, porque ordenan el trabajo y el backlog, y porque fijan quién es owner de cada dominio (gobierno, Sección 7.6).
 
 | Rol (lo cubre Katia Menshikoff) | Responsabilidad | Dominios |
 |---|---|---|
@@ -413,9 +413,9 @@ Se suma un 20 % de contingencia (~30 h), concentrada en streaming y AstraDB. Con
 
 ---
 
-## 12. Repositorio y evidencia (§5.2.12)
+## 12. Repositorio y evidencia (consigna, Sección 5.2.12)
 
-- Estructura según la consigna §8.1: `README.md`, `docs/`, `data/`, `src/`, `notebooks/`, `tests/`, `config/`, `infra/`, `evidence/`, `DECISIONS.md`.
+- Estructura según la Sección 8.1 de la consigna: `README.md`, `docs/`, `data/`, `src/`, `notebooks/`, `tests/`, `config/`, `infra/`, `evidence/`, `DECISIONS.md`.
 - **Evidencia mínima de lectura y exploración:**
   - `evidence/profile/profile_report.md` y `profile_summary.json`: perfil de las 8 fuentes.
   - `evidence/profile/landing_manifest.sha256`: huella de Landing para verificar que no se modifica.

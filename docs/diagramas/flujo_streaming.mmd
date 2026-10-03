@@ -1,9 +1,15 @@
-flowchart LR
-  A[landing/usage_events_stream/*.jsonl] -->|readStream · EVENT_SCHEMA<br/>maxFilesPerTrigger=10| B[Parse + cast<br/>event_ts UTC · value_raw→value]
-  B --> C[withWatermark event_ts 62 days<br/>dropDuplicatesWithinWatermark event_id]
-  C -->|writeStream append<br/>checkpoint| D[(bronze/usage_events<br/>partition event_date)]
-  D -->|foreachBatch| E[Silver: Q01-Q05, unificar v1/v2,<br/>join dim_resource/dim_org]
-  E --> F[(silver/fact_usage_events)]
-  E -.-> Q[(quarantine)]
-  F --> G[Gold: recomputar fechas afectadas<br/>org_daily_usage_by_service · cost_anomaly · genai]
-  G -->|upsert por PK| H[(Cassandra)]
+flowchart TB
+  subgraph S1["Streaming a Bronze"]
+    direction LR
+    A[landing/usage_events_stream/*.jsonl] -->|readStream · EVENT_SCHEMA<br/>maxFilesPerTrigger=10| B[Parse + cast<br/>event_ts UTC · value_raw→value]
+    B --> C[withWatermark event_ts 62 days<br/>dropDuplicatesWithinWatermark event_id]
+    C -->|writeStream append<br/>checkpoint| D[(bronze/usage_events<br/>partition event_date)]
+  end
+  subgraph S2["foreachBatch: Silver, Gold y Serving"]
+    direction LR
+    E[Silver: Q01-Q05, unificar v1/v2,<br/>join dim_resource/dim_org] --> F[(silver/fact_usage_events)]
+    E -.-> Q[(quarantine)]
+    F --> G[Gold: recomputar fechas afectadas<br/>org_daily_usage_by_service<br/>cost_anomaly · genai]
+    G -->|upsert por PK| H[(Cassandra)]
+  end
+  S1 -->|foreachBatch por micro-batch| S2

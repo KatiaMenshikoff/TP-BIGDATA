@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>$pagetitle$</title>
+$for(css)$
+<link rel="stylesheet" href="$css$">
+$endfor$
+</head>
+<body>
+<section class="portada">
+  <div class="kicker">Proyecto integrador · Big Data · ITBA</div>
+  <h1>Cloud Provider Analytics</h1>
+  <p class="subtitulo">Documento de diseño v1 · Primera evaluación parcial: diseño y fundación de datos</p>
+  <div class="linea"></div>
+  <p class="resumen">Arquitectura Lambda para ingerir, limpiar, conformar y publicar datos de uso, costo, facturación, soporte y GenAI de un proveedor cloud, con PySpark, Structured Streaming, Parquet y Cassandra/AstraDB.</p>
+  <div class="datos">
+    <table>
+      <tr><td>Autora</td><td>Katia Menshikoff · Legajo 64396</td></tr>
+      <tr><td>Materia</td><td>Big Data · 2.º cuatrimestre 2026</td></tr>
+      <tr><td>Docente</td><td>Prof. Diego Mosquera</td></tr>
+      <tr><td>Entrega</td><td>05/10/2026 · Versión 1.0</td></tr>
+    </table>
+  </div>
+</section>
+$if(toc)$
+<nav id="TOC">
+$table-of-contents$
+</nav>
+$endif$
+$body$
+</body>
+</html>

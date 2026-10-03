@@ -11,12 +11,12 @@ Landing → Bronze → Silver → Gold (Parquet) → Cassandra/AstraDB, con PySp
 
 ## Artefactos de la Entrega 1
 
-| Artefacto (consigna §5.3) | Dónde |
+| Artefacto (consigna, Sección 5.3) | Dónde |
 |---|---|
 | Documento de diseño | [`docs/01_documento_diseno.md`](docs/01_documento_diseno.md) (también en PDF: `docs/01_documento_diseno.pdf`) |
 | Diagrama de arquitectura v1 | [`docs/diagramas/arquitectura_v1.png`](docs/diagramas/arquitectura_v1.png) · fuente `.mmd` |
-| Matriz requisito-componente | Documento de diseño §6 |
-| Plan inicial (supuestos, riesgos, esfuerzo, próximos pasos) | Documento de diseño §10–§12 |
+| Matriz requisito-componente | Documento de diseño, Sección 6 |
+| Plan inicial (supuestos, riesgos, esfuerzo, próximos pasos) | Documento de diseño, Secciones 10 a 12 |
 | Inventario y diccionario de fuentes | [`docs/02_inventario_fuentes.md`](docs/02_inventario_fuentes.md) |
 | Registro de decisiones | [`DECISIONS.md`](DECISIONS.md) |
 | Evidencia de lectura y exploración | [`evidence/`](evidence/README.md) · [`notebooks/00_exploracion_landing.ipynb`](notebooks/00_exploracion_landing.ipynb) |
@@ -45,6 +45,8 @@ pytest -q tests
 ```
 
 **Google Colab:** subir el repo y el zip a Drive y ejecutar `!pip -q install -r requirements.txt` antes de los mismos comandos (con `!`). El notebook `notebooks/00_exploracion_landing.ipynb` lee la variable `CPA_LANDING` para encontrar Landing.
+
+**Regenerar el PDF del documento de diseño** (requiere pandoc, poppler y Google Chrome): `python scripts/build_pdf.py`. El estilo, la portada y el tema de los diagramas están en `docs/estilo/`.
 
 **Limpieza / reinicio:** `rm -rf evidence/mapreduce datalake && scripts/setup_landing.sh <zip>` deja el entorno como recién clonado.
 

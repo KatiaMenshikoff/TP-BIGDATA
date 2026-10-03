@@ -29,7 +29,7 @@ Formato: contexto → decisión → alternativas → consecuencias. Estado: ✅ 
 - **Consecuencias:** las consultas por rango de fechas aprovechan la poda de particiones. Para filtrar por organización, el acceso rápido lo da Cassandra (partición por `org_id`).
 
 ### D-05 · Late data y watermark (abierta)
-- **Contexto:** los 120 archivos traen eventos de los 60 días. Simulando 1 archivo por trigger, un watermark de 1 día marca como tardío el 97,5 % de los eventos y uno de 30 días, el 49,6 % (`docs/01_documento_diseno.md` §8.3).
+- **Contexto:** los 120 archivos traen eventos de los 60 días. Simulando 1 archivo por trigger, un watermark de 1 día marca como tardío el 97,5 % de los eventos y uno de 30 días, el 49,6 % (`docs/01_documento_diseno.md`, Sección 8.3).
 - **Decisión propuesta:** el stream a Bronze usa watermark de 62 días + `dropDuplicatesWithinWatermark(event_id)`: 0 % de pérdida con estos datos y un estado de ~43 k claves. Un batch diario reconcilia las líneas por `source_file` (Landing vs Bronze) y manda los tardíos descartados a `quarantine/late_events`. Gold se recalcula sólo para las fechas afectadas.
 - **Alternativas:** merge por `event_id` sobre una tabla Delta/Iceberg (más escalable, agrega una dependencia), sin watermark (estado sin límite).
 - **A validar** con el docente en la revisión de la Entrega 1.

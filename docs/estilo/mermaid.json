@@ -1,0 +1,16 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Avenir Next, Helvetica, sans-serif",
+    "fontSize": "15px",
+    "primaryColor": "#eef4f3",
+    "primaryBorderColor": "#0f766e",
+    "primaryTextColor": "#1f2937",
+    "lineColor": "#4b5563",
+    "secondaryColor": "#fdf3e7",
+    "tertiaryColor": "#f7f7f5",
+    "clusterBkg": "#f7f7f5",
+    "clusterBorder": "#c8ccc9",
+    "edgeLabelBackground": "#ffffff"
+  }
+}
