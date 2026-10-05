@@ -23,8 +23,11 @@ Revisión interna del equipo. No cambia el alcance ni las decisiones de arquitec
 | Documento de diseño, Sección 11.1 | Los roles se reparten entre los cuatro integrantes. El rol de streaming y serving se divide en dos. |
 | Documento de diseño, Sección 11.3 | El repositorio figura como público. |
 | README | Se lista a los integrantes del equipo. |
+| Documento de diseño, encabezado y portada | La versión pasa a 1.1 y la portada lista a los cuatro integrantes. |
+| Documento de diseño, Sección 8.3 (punto 3) | Se completa la última oración ("…por sí solo."). |
+| Documento de diseño, Sección 11.2 | Las horas se aclaran como totales del equipo (unas 3–4 h por persona por semana); se quita la referencia a "una sola persona". |
+| Plan de correcciones | Se corrige el apellido "Josephsohn". |
 
 ### Pendiente
 
-Regenerar `docs/01_documento_diseno.pdf` con `python scripts/build_pdf.py`.
 Escuchar y corregir las correciones del docente.

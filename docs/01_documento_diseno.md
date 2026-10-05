@@ -2,7 +2,7 @@
 
 **Primera evaluación parcial · Diseño y fundación de datos**<br>
 Big Data · ITBA · 2C 2026 · Prof. Diego Mosquera<br>
-Versión 1.0 · Fecha de entrega: 05/10/2026<br>
+Versión 1.1 · Fecha de entrega: 05/10/2026<br>
 
 Autores:
 - Francisco Gomes · Legajo 64450
@@ -291,7 +291,7 @@ El perfil muestra que **los 120 archivos contienen eventos de todo el rango 03/0
 **Consecuencia:** un watermark "típico" (minutos u horas) haría que los operadores con estado descarten casi todo. **Propuesta (D-05, abierta):**
 1. El stream a Bronze aplica `withWatermark("event_ts", "62 days")` + `dropDuplicatesWithinWatermark(["event_id"])`. El delay cubre el desorden observado (60 días) más 2 días de margen, así que con estos datos se pierde **0 %**. El estado queda acotado a ~43 k claves (unos pocos MB), viable para este volumen.
 2. Si llega un evento más tarde que el watermark, Spark lo descarta en el operador con estado. Para que no se pierda en silencio, un batch diario de reconciliación compara las líneas por `source_file` en Landing (manifest) contra Bronze. Los faltantes se releen desde Landing y van a `quarantine/late_events` con su motivo.
-3. Silver se procesa en `foreachBatch` y sobrescribe sólo las particiones de fecha que tocó cada micro-batch. En cada micro-batch se obtienen las fechas afectadas, se leen todos los eventos de Bronze de esas fechas y se reconstruye la partición completa de Silver. El micro-batch nunca reemplaza una partición por sí
+3. Silver se procesa en `foreachBatch` y sobrescribe sólo las particiones de fecha que tocó cada micro-batch. En cada micro-batch se obtienen las fechas afectadas, se leen todos los eventos de Bronze de esas fechas y se reconstruye la partición completa de Silver. El micro-batch nunca reemplaza una partición por sí solo.
 4. Gold se recalcula para las **fechas afectadas** en cada micro-batch (overwrite dinámico), así un evento tardío corrige el agregado del día que corresponde.
 
 A escala real, un watermark de 62 días no sería sostenible. Allí la deduplicación se haría con un *merge* por `event_id` sobre Silver (Delta/Iceberg). Lo dejamos como decisión abierta para validar en la Entrega 2.
@@ -395,7 +395,7 @@ El trabajo se reparte por rol. Cada rol ordena una parte del trabajo y del backl
 | Data Engineer serving + anomalías | Francisco Gomes | Cassandra/AstraDB, consultas CQL, detección de anomalías | FinOps-anomalías |
 
 ### 11.2 Esfuerzo estimado (horas)
-| Fase | Entregable | Horas | Semanas disponibles | Horas/semana |
+| Fase | Entregable | Horas (equipo) | Semanas disponibles | Horas/semana (equipo) |
 |---|---|---|---|---|
 | E1 · Diseño y fundación (hasta 05/10) | Este documento, repo, perfil, MapReduce | 30 | — | — |
 | E2 · Bronze batch + streaming | 3 maestros + eventos, checkpoints | 24 | | |
@@ -408,7 +408,7 @@ El trabajo se reparte por rol. Cada rol ordena una parte del trabajo y del backl
 | **Subtotal final (16/11 → 07/12)** | | **48** | 3 | **~16** |
 | **Total** | | **154** | | |
 
-Se suma un 20 % de contingencia (~30 h), concentrada en streaming y AstraDB. Con una sola persona la coordinación es mínima, pero no hay a quién repartir el trabajo. Por eso el backlog se ordena en **obligatorio / deseable / fuera de alcance** desde la Entrega 2, y lo deseable (por ejemplo Delta Lake o IsolationForest) sólo se encara si lo obligatorio está cerrado.
+Se suma un 20 % de contingencia (~30 h), concentrada en streaming y AstraDB. Repartido entre los 4 integrantes, son unas 3–4 h por persona por semana. El backlog se ordena en **obligatorio / deseable / fuera de alcance** desde la Entrega 2, y lo deseable (por ejemplo Delta Lake o IsolationForest) sólo se encara si lo obligatorio está cerrado.
 
 ### 11.3 Recursos
 | Recurso | Uso | Costo |
