@@ -2,7 +2,13 @@
 
 **Primera evaluación parcial · Diseño y fundación de datos**<br>
 Big Data · ITBA · 2C 2026 · Prof. Diego Mosquera<br>
-Autora: Katia Menshikoff · Legajo 64396 (trabajo individual) · Versión 1.0 · Fecha de entrega: 05/10/2026
+Versión 1.0 · Fecha de entrega: 05/10/2026<br>
+
+Autores:
+- Francisco Gomes · Legajo 64450
+- Iván Josephsohn · Legajo 63737
+- Katia Menshikoff · Legajo 64396
+- Julián Ariel Szarfmeser · Legajo 67032
 
 > Este documento cubre los 12 puntos del alcance obligatorio (Sección 5.2 de la consigna). Cada sección indica a qué punto responde.
 > Todas las cifras sobre los datos salen de `evidence/profile/profile_report.md`, que genera `src/profiling/profile_landing.py` y se puede volver a generar.
@@ -354,7 +360,7 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 | K5 | Desfase por zona horaria (verificado: Spark en hora local corrió fechas a 02/07 y generó 1.102 claves de más) | Alta | Medio | `spark.sql.session.timeZone=UTC` obligatorio en config (D-07) |
 | K6 | *Small files* por particionar de más | Media | Bajo | Particionar sólo por fecha + `coalesce` (Sección 7.2) |
 | K7 | PII (`email`, recursos con `pii:true`) expuesta en Gold | Media | Medio | Hash SHA-256 del email en Silver; no se publica en Gold ni en Cassandra |
-| K8 | Trabajo individual: carga horaria alta, curva de aprendizaje de Streaming/Cassandra y una sola persona como punto único de falla | Media | Alto | Spikes técnicos tempranos (streaming y AstraDB en las primeras 2 semanas de la E2); backlog obligatorio/deseable; consultas tempranas al docente |
+| K8 | Carga horaria alta, curva de aprendizaje de Streaming/Cassandra | Media | Alto | Spikes técnicos tempranos (streaming y AstraDB en las primeras 2 semanas de la E2); backlog obligatorio/deseable; consultas tempranas al docente |
 
 ### 10.3 Decisiones abiertas (a cerrar con el feedback de la Entrega 1)
 | ID | Pregunta | Opciones | Recomendación actual |
