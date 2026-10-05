@@ -2,7 +2,13 @@
 
 Proyecto integrador · Big Data · ITBA · 2C 2026 · Prof. Diego Mosquera<br>
 **Estado: Entrega 1 — Diseño y fundación de datos (05/10/2026)**<br>
-Autora: Katia Menshikoff · Legajo 64396 (trabajo individual)
+Autores:
+- Francisco Gomes · Legajo 64450
+- Iván Josephsohn · Legajo 63737
+- Katia Menshikoff · Legajo 64396
+- Julián Ariel Szarfmeser · Legajo 67032
+
+
 
 Pipeline ETL + Streaming + Serving para analítica de FinOps, Soporte y Producto de un proveedor cloud:
 Landing → Bronze → Silver → Gold (Parquet) → Cassandra/AstraDB, con PySpark y Structured Streaming.

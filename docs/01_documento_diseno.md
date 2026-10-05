@@ -35,7 +35,7 @@ El área de datos del proveedor cloud recibe datos crudos con nulos, tipos ambig
 | Analista FinOps | FinOps | ¿Cuánto cuesta y cuánto consume cada organización por servicio y por día? ¿Cuáles son los top-N servicios por costo en los últimos 14 días? ¿Qué costos son anómalos? ¿Cuál es el revenue mensual neto en USD? | Minutos para el costo incremental; D+1 para revenue |
 | Líder de Soporte | Soporte | ¿Cómo evolucionan los tickets críticos y la tasa de SLA breach por día (últimos 30 días)? ¿Cuál es el CSAT por organización? | D+1 |
 | Product Manager | Producto / GenAI | ¿Cuánto se usa cada servicio (requests, CPU, storage)? ¿Cuántos tokens GenAI se consumen por día y a qué costo? ¿Cuánto carbono se emite? | Horas / D+1 |
-| Ingeniería de datos (autora) | Plataforma | ¿El pipeline corrió, cuántos registros entraron y cuántos quedaron en quarantine? ¿Es reprocesable? | Por corrida |
+| Ingeniería de datos | Plataforma | ¿El pipeline corrió, cuántos registros entraron y cuántos quedaron en quarantine? ¿Es reprocesable? | Por corrida |
 
 ### 1.3 Objetivos medibles (criterios de éxito)
 
@@ -205,7 +205,7 @@ datalake/
 ### 7.3 Naming y convenciones
 - Todo en `snake_case`, en inglés para tablas y columnas (como la fuente) y en español para documentación.
 - Silver usa los prefijos `dim_` y `fact_`. Gold usa el nombre del mart de la Sección 7.3 de la consigna.
-- Las columnas técnicas llevan prefijo fijo: `ingest_ts`, `source_file`, `run_id`, `record_hash`; en SCD2 se agregan `valid_from`, `valid_to`, `is_current`.
+- Las columnas técnicas tienen nombres fijos: `ingest_ts`, `source_file`, `run_id`, `record_hash`; en SCD2 se agregan `valid_from`, `valid_to`, `is_current`.
 - Fechas en UTC (`spark.sql.session.timeZone=UTC`, ver D-07); `event_ts` es el timestamp y `event_date` la fecha derivada.
 - Montos con sufijo de moneda: `*_usd`, `*_local`.
 
@@ -369,7 +369,7 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 | Consulta obligatoria (consigna, Sección 7.4) | Tabla | PRIMARY KEY |
 |---|---|---|
 | Q1 Costos y requests diarios por org y servicio en un rango de fechas | `usage_by_org_day_service` | `((org_id), usage_date, service)` |
-| Q2 Top-N servicios por costo acumulado en 14 días | `cost_14d_by_org_service` | `((org_id, as_of_date), cost_14d_usd, service)` - clustering DESC por costo (la partición se reescribe completa en cada corrida) |
+| Q2 Top-N servicios por costo acumulado en 14 días | `cost_14d_by_org_service` | `((org_id, as_of_date), cost_14d_usd, service)` - clustering DESC por costo (la partición se borra y se vuelve a escribir en cada corrida) |
 | Q3 Tickets críticos y SLA breach por día (30 días) | `tickets_by_severity_day` | `((severity), date)` — sólo 4 particiones, *clustering* por fecha |
 | Q4 Revenue mensual con créditos e impuestos en USD | `revenue_by_org_month` | `((org_id), month)` |
 | Q5 Tokens GenAI y costo estimado por día | `genai_by_org_day` | `((org_id), date)` |
@@ -379,13 +379,14 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 ## 11. Estimación preliminar de esfuerzo, roles y recursos (consigna, Sección 5.2.11)
 
 ### 11.1 Roles
-El trabajo es **individual**: Katia Menshikoff (legajo 64396) asume todos los roles. Igual se separan las responsabilidades por rol, porque ordenan el trabajo y el backlog, y porque fijan quién es owner de cada dominio (gobierno, Sección 7.6).
+El trabajo se reparte por rol. Cada rol ordena una parte del trabajo y del backlog, y fija quién es owner de cada dominio (gobierno, Sección 7.6).
 
-| Rol (lo cubre Katia Menshikoff) | Responsabilidad | Dominios |
-|---|---|---|
-| Arquitecta de datos | Arquitectura, decisiones, documentación, integración y defensa | Gobierno, metadatos |
-| Data Engineer batch + calidad | Ingesta batch, Silver, reglas de calidad, marts de facturación y soporte | FinOps-revenue, Soporte |
-| Data Engineer streaming + serving | Structured Streaming, marts de uso y GenAI, Cassandra/AstraDB, anomalías | FinOps-uso, Producto |
+| Rol | Integrante | Responsabilidad | Dominios |
+|---|---|---|---|
+| Arquitecta de datos | Katia Menshikoff | Arquitectura, decisiones, documentación, integración y defensa | Gobierno, metadatos |
+| Data Engineer batch + calidad | Julián Ariel Szarfmeser | Ingesta batch, Silver, reglas de calidad, marts de facturación y soporte | FinOps-revenue, Soporte |
+| Data Engineer streaming | Iván Josephsohn | Structured Streaming, marts de uso y GenAI | FinOps-uso, Producto |
+| Data Engineer serving + anomalías | Francisco Gomes | Cassandra/AstraDB, consultas CQL, detección de anomalías | FinOps-anomalías |
 
 ### 11.2 Esfuerzo estimado (horas)
 | Fase | Entregable | Horas | Semanas disponibles | Horas/semana |
@@ -409,7 +410,7 @@ Se suma un 20 % de contingencia (~30 h), concentrada en streaming y AstraDB. Con
 | Google Colab (CPU estándar) + Google Drive | Ejecución de PySpark y persistencia del lake | Gratis |
 | PySpark 4.x, Java 17/21 | Motor | Libre |
 | DataStax AstraDB (*free tier*) o Cassandra 5 en Docker | Serving | Gratis |
-| GitHub (repo privado) | Versionado, issues como backlog | Gratis |
+| GitHub (repo público) | Versionado, issues como backlog | Gratis |
 
 ---
 
