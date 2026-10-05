@@ -180,7 +180,7 @@ datalake/
 |---|---|---|
 | Landing → Bronze | El archivo parsea con el esquema explícito; se agregan `ingest_ts`, `source_file`, `run_id`; se deduplica por clave natural (eventos: `event_id`) | Líneas corruptas → `quarantine/bronze_<entidad>` (modo `PERMISSIVE` + `_corrupt_record`) |
 | Bronze → Silver | Pasa las reglas de calidad *bloqueantes* (tabla 7.4); tipos casteados; v1/v2 unificados; joins con dimensiones válidos | → `quarantine/silver_<entidad>` con `rule_id` |
-| Silver → Gold | Partición de fecha cerrada (watermark superado o corrida batch completa) y reconciliación de conteos Silver ↔ Gold | La corrida queda en `FAILED` en el `run_log`; Gold no se pisa |
+| Silver → Gold | En streaming, las fechas afectadas se recalculan en cada micro-batch y no son definitivas hasta superar el watermark. En batch, los datos pasan a Gold al terminar la corrida. Siempre se verifica que los conteos coincidan con Silver | La corrida queda en `FAILED` en el `run_log`; Gold no se pisa |
 | Gold → Cassandra | Gold escrito con éxito (`_SUCCESS`) | Reintento; el upsert por PK es idempotente |
 
 ### 7.2 Tablas, particiones y modo de escritura
@@ -285,7 +285,7 @@ El perfil muestra que **los 120 archivos contienen eventos de todo el rango 03/0
 **Consecuencia:** un watermark "típico" (minutos u horas) haría que los operadores con estado descarten casi todo. **Propuesta (D-05, abierta):**
 1. El stream a Bronze aplica `withWatermark("event_ts", "62 days")` + `dropDuplicatesWithinWatermark(["event_id"])`. El delay cubre el desorden observado (60 días) más 2 días de margen, así que con estos datos se pierde **0 %**. El estado queda acotado a ~43 k claves (unos pocos MB), viable para este volumen.
 2. Si llega un evento más tarde que el watermark, Spark lo descarta en el operador con estado. Para que no se pierda en silencio, un batch diario de reconciliación compara las líneas por `source_file` en Landing (manifest) contra Bronze. Los faltantes se releen desde Landing y van a `quarantine/late_events` con su motivo.
-3. Silver se procesa en `foreachBatch` y sobrescribe sólo las particiones de fecha que tocó cada micro-batch.
+3. Silver se procesa en `foreachBatch` y sobrescribe sólo las particiones de fecha que tocó cada micro-batch. En cada micro-batch se obtienen las fechas afectadas, se leen todos los eventos de Bronze de esas fechas y se reconstruye la partición completa de Silver. El micro-batch nunca reemplaza una partición por sí
 4. Gold se recalcula para las **fechas afectadas** en cada micro-batch (overwrite dinámico), así un evento tardío corrige el agregado del día que corresponde.
 
 A escala real, un watermark de 62 días no sería sostenible. Allí la deduplicación se haría con un *merge* por `event_id` sobre Silver (Delta/Iceberg). Lo dejamos como decisión abierta para validar en la Entrega 2.
@@ -369,7 +369,7 @@ Job 2   map(e):               emit((e.org_id, date(e.ts), e.service),
 | Consulta obligatoria (consigna, Sección 7.4) | Tabla | PRIMARY KEY |
 |---|---|---|
 | Q1 Costos y requests diarios por org y servicio en un rango de fechas | `usage_by_org_day_service` | `((org_id), usage_date, service)` |
-| Q2 Top-N servicios por costo acumulado en 14 días | `cost_14d_by_org_service` | `((org_id), cost_14d_usd, service)` — *clustering* DESC por costo |
+| Q2 Top-N servicios por costo acumulado en 14 días | `cost_14d_by_org_service` | `((org_id, as_of_date), cost_14d_usd, service)` - clustering DESC por costo (la partición se reescribe completa en cada corrida) |
 | Q3 Tickets críticos y SLA breach por día (30 días) | `tickets_by_severity_day` | `((severity), date)` — sólo 4 particiones, *clustering* por fecha |
 | Q4 Revenue mensual con créditos e impuestos en USD | `revenue_by_org_month` | `((org_id), month)` |
 | Q5 Tokens GenAI y costo estimado por día | `genai_by_org_day` | `((org_id), date)` |
