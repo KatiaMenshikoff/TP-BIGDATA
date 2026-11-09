@@ -12,7 +12,6 @@
 @page {
   size: A4;
   margin: 18mm 16mm 18mm 16mm;
-  @bottom-left  { content: "Cloud Provider Analytics · Documento de diseño v1"; font: 7.5pt "Avenir Next", sans-serif; color: #9ca3af; }
   @bottom-right { content: counter(page); font: 600 8pt "Avenir Next", sans-serif; color: #0f766e; }
 }
 @page :first { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }

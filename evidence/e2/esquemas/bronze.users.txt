@@ -1,0 +1,13 @@
+root
+ |-- user_id: string (nullable = true)
+ |-- org_id: string (nullable = true)
+ |-- email: string (nullable = true)
+ |-- role: string (nullable = true)
+ |-- active: boolean (nullable = true)
+ |-- created_at: date (nullable = true)
+ |-- last_login: date (nullable = true)
+ |-- ingest_ts: timestamp (nullable = true)
+ |-- source_file: string (nullable = true)
+ |-- run_id: string (nullable = true)
+ |-- record_hash: string (nullable = true)
+ |-- ingest_date: date (nullable = true)

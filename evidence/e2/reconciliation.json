@@ -1,0 +1,9 @@
+{
+ "landing_rows": 43200,
+ "bronze_rows": 43200,
+ "duplicate_copies": 0,
+ "late_dropped_by_watermark": 0,
+ "without_key_or_time": 0,
+ "watermark": "62 days",
+ "balanced": true
+}

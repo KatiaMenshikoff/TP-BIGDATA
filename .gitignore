@@ -7,3 +7,6 @@ __pycache__/
 secure-connect-*.zip
 # Datos: Landing se obtiene con scripts/setup_landing.sh; las zonas derivadas se regeneran
 datalake/
+
+# Lakes temporales de las demos
+datalake_demo/

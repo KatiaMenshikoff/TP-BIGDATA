@@ -1,0 +1,29 @@
+run_id=20261109T205958Z-d016ac lake=datalake config=config/pipeline.example.yaml
+[run_log] serving            connect                      in=None out=None q=None OK 0.14s destino=local keyspace=cpa
+[run_log] bronze_batch       customers_orgs               in=80 out=80 q=0 OK 2.82s partition=ingest_date
+[run_log] bronze_batch       users                        in=800 out=800 q=0 OK 0.56s partition=ingest_date
+[run_log] bronze_batch       resources                    in=400 out=400 q=0 OK 0.39s partition=ingest_date
+[run_log] bronze_batch       billing_monthly              in=240 out=240 q=0 OK 0.41s partition=month
+[run_log] bronze_batch       support_tickets              in=1000 out=1000 q=0 OK 0.38s partition=ingest_date
+[run_log] bronze_batch       marketing_touches            in=1500 out=1500 q=0 OK 0.35s partition=ingest_date
+[run_log] bronze_batch       nps_surveys                  in=92 out=92 q=0 OK 0.35s partition=ingest_date
+[run_log] silver_masters     dim_org (SCD2)               in=80 out=80 q=None OK 0.78s as_of=2026-11-09 vigentes=80
+[run_log] silver_masters     dim_user                     in=800 out=800 q=None OK 0.25s Q07 login_inconsistente=232 · email→sha256
+[run_log] silver_masters     dim_resource                 in=400 out=400 q=None OK 0.32s recursos con pii=85
+[run_log] silver_masters     fact_billing                 in=240 out=240 q=None OK 0.45s Q08 fx_sospechoso=144 Q09 nota_credito=13 Q10 credits_imputados=137
+[run_log] bronze_stream      usage_events                 in=43200 out=43200 q=None OK 11.78s micro-batches=12 watermark=62 days descartados_por_watermark=0 total_bronze=43200
+[run_log] silver_events      fact_usage_events[batch 0]   in=43200 out=42989 q=211 OK 2.94s fechas=60
+[run_log] gold_usage         org_daily_usage_by_service[batch 0] in=42989 out=11050 q=None OK 2.17s fechas=60 upsert_cassandra=11050
+[run_log] silver_events      fact_usage_events[batch 1]   in=43200 out=42989 q=211 OK 2.55s fechas=60
+[run_log] gold_usage         org_daily_usage_by_service[batch 1] in=42989 out=11050 q=None OK 2.1s fechas=60 upsert_cassandra=11050
+[run_log] silver_events      fact_usage_events[batch 2]   in=43200 out=42989 q=211 OK 2.2s fechas=60
+[run_log] gold_usage         org_daily_usage_by_service[batch 2] in=42989 out=11050 q=None OK 1.99s fechas=60 upsert_cassandra=11050
+[run_log] silver_events      fact_usage_events[batch 3]   in=43200 out=42989 q=211 OK 2.12s fechas=60
+[run_log] gold_usage         org_daily_usage_by_service[batch 3] in=42989 out=11050 q=None OK 2.01s fechas=60 upsert_cassandra=11050
+[run_log] silver_gold        foreachBatch                 in=43200 out=None q=None OK 20.2s micro-batches procesados=4
+[run_log] reconcile          late_events                  in=43200 out=43200 q=0 OK 1.34s landing_rows=43200 bronze_rows=43200 duplicate_copies=0 late_dropped_by_watermark=0 without_key_or_time=0 watermark=62 days balanced=True
+[run_log] anomalies          cost_anomaly_mart            in=42989 out=11050 q=None OK 1.61s eventos_anomalos=191 org-dia-servicio_anomalos=190 metodo=robust_z_mad umbral=3.5
+[run_log] serving            usage_by_org_day_service     in=11050 out=11050 q=None OK 1.09s upserts=11050 destino=local
+[run_log] serving            cost_14d_by_org_service      in=262 out=262 q=None OK 0.23s as_of=2025-08-31 inserts=262
+[run_log] pipeline           total                        in=None out=None q=None OK 43.42s etapas=bronze_batch,silver_masters,bronze_stream,silver_gold,reconcile,anomalies,serving
+OK run_id=20261109T205958Z-d016ac

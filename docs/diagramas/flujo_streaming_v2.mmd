@@ -1,0 +1,18 @@
+%% Flujo streaming v2 · Entrega 2 · 09/11/2026 · dos queries encadenadas, cada una con su checkpoint
+flowchart TB
+  subgraph Q1["Query 1 · bronze_usage_events"]
+    direction LR
+    A["landing/usage_events_stream<br/>120 × .jsonl"] -->|"readStream.json · EVENT_SCHEMA<br/>maxFilesPerTrigger=10"| B["+ ingest_ts · source_file · run_id<br/>event_ts = try_to_timestamp (UTC)"]
+    B --> C["withWatermark(event_ts, 62 days)<br/>dropDuplicatesWithinWatermark(event_id)"]
+    C -->|"append · partitionBy event_date"| D[("bronze/usage_events")]
+  end
+  subgraph Q2["Query 2 · silver_gold_usage · foreachBatch"]
+    direction LR
+    E["fechas afectadas<br/>= distinct(event_date)"] --> F["lee TODO Bronze de esas fechas<br/>conform_events Q00–Q05<br/>features + joins dims"]
+    F -->|overwrite dinámico| G[("silver/fact_usage_events")]
+    F -.->|rule_id| Q[("quarantine")]
+    G --> H["build_daily_usage"] -->|overwrite dinámico| I[("gold/org_daily_usage_by_service")]
+    H -->|upsert por PK| J[("Cassandra")]
+  end
+  D --> E
+  D -.->|"batch reconcile: Landing − Bronze − duplicados"| R[("quarantine/late_events")]

@@ -1,6 +1,7 @@
-# Copiar a config/pipeline.yaml y ajustar. Sin credenciales: los secretos van en variables de entorno (.env).
+# Copiar a config/pipeline.yaml y ajustar (si no existe, el pipeline usa este archivo).
+# Sin credenciales: los secretos de Cassandra/AstraDB van en variables de entorno (.env, ver config/.env.example).
 paths:
-  lake_root: datalake            # en Colab: /content/drive/MyDrive/cpa/datalake
+  lake_root: datalake            # relativo a la raíz del repo; en Colab: /content/drive/MyDrive/cpa/datalake
   landing: ${lake_root}/landing
   bronze: ${lake_root}/bronze
   silver: ${lake_root}/silver
@@ -11,12 +12,15 @@ paths:
 spark:
   master: local[*]
   shuffle_partitions: 8
+  driver_memory: 2g
   session_timezone: UTC          # D-07: obligatorio
   partition_overwrite_mode: dynamic
+  log_level: ERROR
 streaming:
-  max_files_per_trigger: 10
+  max_files_per_trigger: 10      # 120 archivos → 12 micro-batches de ~3.600 eventos
+  silver_max_files_per_trigger: 200
   trigger: available_now         # demo determinística; producción: "1 minute"
-  watermark_delay: 62 days       # D-05 (abierta)
+  watermark_delay: 62 days       # D-05 (cerrada en E2: ver DECISIONS.md)
 quality:
   min_cost_usd_increment: -0.01  # Q02
   csat_range: [1, 5]             # Q06
@@ -25,6 +29,9 @@ anomalies:
   method: robust_z_mad           # D-08
   group_by: [service, metric]
   threshold: 3.5
+serving:
+  enabled: true                  # false o --no-serving para correr sólo el lake
+  top_window_days: 14            # Q2
 cassandra:
   keyspace: cpa
-  # ASTRA_DB_TOKEN y ASTRA_DB_SECURE_BUNDLE_PATH se leen del entorno
+  # Local: CASSANDRA_HOST / CASSANDRA_PORT. AstraDB: ASTRA_DB_SECURE_BUNDLE_PATH + ASTRA_DB_TOKEN (se leen del entorno)

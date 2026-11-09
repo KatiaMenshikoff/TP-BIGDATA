@@ -1,0 +1,11 @@
+rule_id,reason,event_id,event_ts,org_id,resource_id,service,metric,value_raw,cost_usd_increment,source_file
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_05rs1cd7uxv6,2025-08-05 12:21:00,org_1n13jcat,res_h2r9pegl,compute,requests,119.0,-7.7014,events_part_0009.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_07y0qnbewq73,2025-08-23 14:57:00,org_kdgigatj,res_wds0hprw,database,storage_gb_hours,11.6425,-0.506,events_part_0063.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_0buvvhr9d2og,2025-07-05 22:55:00,org_5935a0l7,res_orac8cyn,compute,requests,133.0,-10.99,events_part_0037.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_0mv15gk8xuga,2025-08-08 20:47:00,org_53lc58dr,res_flq8xpa9,genai,cpu_hours,1.5755,-0.1854,events_part_0014.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_0s3r8qeziv84,2025-07-07 21:00:00,org_5lxo6qji,res_ykis11d2,database,requests,121.0,-5.1627,events_part_0071.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_11kvg2do2pr9,2025-07-09 11:56:00,org_teiyzcot,res_kh0uhk7x,compute,requests,114.0,-5.4733,events_part_0081.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_11u1888clwdx,2025-08-19 10:37:00,org_1t2tala7,res_lg1zhqun,analytics,storage_gb_hours,12.4973,-0.8962,events_part_0035.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_14o9hknbdcuu,2025-07-20 05:01:00,org_pseimvih,res_02grxpud,storage,cpu_hours,1.8146,-0.0237,events_part_0033.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_14zq2llgljfy,2025-08-26 18:50:00,org_dhylurtp,res_necrysau,database,requests,122.0,-6.3867,events_part_0056.jsonl
+Q02,cost_usd_increment < -0.01 (anomalía de costo),evt_18uxqwwvsscu,2025-08-24 08:26:00,org_pbhsahxt,res_3pqk1io1,genai,cpu_hours,1.0384,-0.1052,events_part_0056.jsonl

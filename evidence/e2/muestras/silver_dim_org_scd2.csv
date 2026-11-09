@@ -1,0 +1,11 @@
+org_id,org_name,plan_tier,lifecycle_stage,record_hash,valid_from,valid_to,is_current
+org_0lvsnujz,Nova Cloud 45,standard,prospect,c69d51a002b8dcd4a383f4a2343a88b51fd5a27b064daf137645aedfcf3579c8,2026-11-09,,True
+org_0lzjjege,Alpha Cloud 77,standard,active,a8b8084706bf925140cc9c5702270cf3c52554160600216b8e19380f366b80ee,2026-11-09,,True
+org_1n13jcat,Nimbus Tech 64,free,active,929f87f96d19a97aa959d9bfdefa08cce6e9f816efb3386f824eec60656f8cc0,2026-11-09,,True
+org_1swjckjl,Beta Tech 57,standard,active,630f416f8baee700011ef1e6cd9eb2ef0f596d7a42b093b280c131221af51db0,2026-11-09,,True
+org_1t2tala7,Gamma Data 15,enterprise,active,5795de7fcb3f451361967cb5d1977a7edf4e92f3075d2a843342b14f4f0fc474,2026-11-09,,True
+org_253j2d54,Zenith Tech 41,standard,active,06bb038bfbbe56f52b0324dc1d051914255cd1e2fd859179ec7525ff79b4e507,2026-11-09,,True
+org_3t60rjiw,Nimbus Cloud 56,enterprise,active,16148a923c03dd64745a01762dc6fab2044656096980a96857785f6bfa6359b1,2026-11-09,,True
+org_41ibljh7,Gamma Cloud 8,standard,active,06596d7c60f0b3a935d503850bc84a822fce9159f02869d419d01ff99ddfef67,2026-11-09,,True
+org_4zw9xa3k,Alpha Cloud 33,standard,prospect,e4848ad58e21d8e452ea2c532ffe66bb3d6609222eb0f6fd981c871104781fad,2026-11-09,,True
+org_53lc58dr,Apex Digital 16,standard,active,57e6922986a61504823a5b759f49ed42723bb071fe76930cb53643d1c986c351,2026-11-09,,True

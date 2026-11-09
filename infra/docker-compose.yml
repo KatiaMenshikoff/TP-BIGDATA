@@ -1,0 +1,22 @@
+# Cassandra 5 local: serving de la Entrega 2 cuando no se usa AstraDB (riesgo K4, decisión D-11).
+# Uso: docker compose -f infra/docker-compose.yml up -d   (listo cuando el healthcheck pasa a "healthy")
+services:
+  cassandra:
+    image: cassandra:5.0
+    container_name: cpa-cassandra
+    ports:
+      - "9042:9042"
+    environment:
+      CASSANDRA_CLUSTER_NAME: cpa
+      MAX_HEAP_SIZE: 1G
+      HEAP_NEWSIZE: 256M
+    volumes:
+      - cpa_cassandra_data:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD-SHELL", "cqlsh -e 'DESCRIBE KEYSPACES' > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+
+volumes:
+  cpa_cassandra_data:

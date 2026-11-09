@@ -1,7 +1,8 @@
-"""Genera docs/01_documento_diseno.pdf a partir del Markdown, con portada, índice paginado y estilo propio.
+"""Genera el PDF de un documento de docs/ a partir del Markdown, con portada, índice paginado y estilo propio.
 
 Requiere pandoc, pdftotext (poppler) y Google Chrome.
-Uso: python scripts/build_pdf.py
+Uso: python scripts/build_pdf.py                       # documento de diseño (E1)
+     python scripts/build_pdf.py 05_documento_entrega2   # documento de implementación (E2)
 """
 from __future__ import annotations
 
@@ -13,19 +14,35 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, "docs")
-SRC = os.path.join(DOCS, "01_documento_diseno.md")
-OUT = os.path.join(DOCS, "01_documento_diseno.pdf")
+import sys
+
+NAME = sys.argv[1] if len(sys.argv) > 1 else "01_documento_diseno"
+SRC = os.path.join(DOCS, f"{NAME}.md")
+OUT = os.path.join(DOCS, f"{NAME}.pdf")
+PORTADAS = {  # datos de portada por documento (plantilla docs/estilo/plantilla.html)
+    "01_documento_diseno": dict(
+        subtitulo="Documento de diseño v1 · Primera evaluación parcial: diseño y fundación de datos",
+        resumen="Arquitectura Lambda para ingerir, limpiar, conformar y publicar datos de uso, costo, facturación, "
+                "soporte y GenAI de un proveedor cloud, con PySpark, Structured Streaming, Parquet y Cassandra/AstraDB.",
+        entrega="05/10/2026 · Versión 1.1", pie="Cloud Provider Analytics · Documento de diseño v1"),
+    "05_documento_entrega2": dict(
+        subtitulo="Implementación técnica v2 · Segunda evaluación parcial: MVP end-to-end mínimo",
+        resumen="Pipeline ejecutable Landing → Bronze → Silver → Gold → Cassandra con ingesta batch y Structured "
+                "Streaming, reglas de calidad con quarantine, detección de anomalías e idempotencia demostrada.",
+        entrega="16/11/2026 · Versión 2.0", pie="Cloud Provider Analytics · Implementación técnica v2"),
+}
 STYLE = os.path.join(DOCS, "estilo")
 CHROME = os.environ.get("CHROME", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 
 
 def pandoc_html(path: str) -> None:
     subprocess.run([
-        "pandoc", SRC, "-f", "gfm", "-t", "html5", "-s", "--toc", "--toc-depth=3",
+        "pandoc", SRC, "-f", "gfm", "-t", "html5", "-s", "--toc", "--toc-depth=3", "--wrap=none",
         "--template", os.path.join(STYLE, "plantilla.html"),
         "--lua-filter", os.path.join(STYLE, "quitar_encabezado.lua"),
         "--css", os.path.join(STYLE, "documento.css"),
-        "--metadata", "pagetitle=Cloud Provider Analytics · Documento de diseño v1",
+        "--metadata", f"pagetitle=Cloud Provider Analytics · {NAME.split('_', 1)[1].replace('_', ' ')}",
+        *[a for k, v in PORTADAS[NAME].items() for a in ("--metadata", f"{k}={v}")],
         "--resource-path", DOCS, "--embed-resources", "-o", path,
     ], check=True, cwd=DOCS)
 

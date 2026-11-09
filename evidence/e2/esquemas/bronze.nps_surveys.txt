@@ -1,0 +1,10 @@
+root
+ |-- org_id: string (nullable = true)
+ |-- survey_date: date (nullable = true)
+ |-- nps_score: double (nullable = true)
+ |-- comment: string (nullable = true)
+ |-- ingest_ts: timestamp (nullable = true)
+ |-- source_file: string (nullable = true)
+ |-- run_id: string (nullable = true)
+ |-- record_hash: string (nullable = true)
+ |-- ingest_date: date (nullable = true)

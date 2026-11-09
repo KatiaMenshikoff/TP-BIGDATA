@@ -1,0 +1,66 @@
+%% Arquitectura v2 · Entrega 2 · 09/11/2026 · refleja SÓLO lo implementado (src/cpa/pipeline.py)
+flowchart LR
+  subgraph SRC["1 · Landing · inmutable (sólo lectura + manifest SHA-256)"]
+    direction TB
+    S4["usage_events_stream/*.jsonl<br/>120 archivos · 43.200 eventos · v1/v2"]
+    S1["7 CSV: orgs · users · resources · billing<br/>tickets · marketing · NPS"]
+  end
+
+  subgraph ING["2 · Ingesta · PySpark 4.0.1"]
+    direction TB
+    T1["<b>bronze_stream</b> · Structured Streaming<br/>esquema explícito · maxFilesPerTrigger=10<br/>watermark 62 d · dedup event_id<br/>file sink append + checkpoint"]
+    B1["<b>bronze_batch</b> · spark.read.schema<br/>PERMISSIVE + _corrupt_record<br/>dedup por clave natural"]
+  end
+
+  subgraph BRZ["3 · Bronze · Parquet"]
+    direction TB
+    BR[("Bronze · 8 tablas<br/>ingest_ts · source_file · run_id · record_hash")]
+    Q[("quarantine<br/>bronze_* · silver_usage_events · late_events<br/>rule_id + reason")]
+  end
+
+  subgraph PRC["4 · Procesamiento"]
+    direction TB
+    T2["<b>silver_gold</b> · Streaming sobre Bronze<br/>foreachBatch: fechas afectadas →<br/>reconstruye Silver y Gold"]
+    RC["<b>reconcile</b> · batch<br/>Landing vs Bronze por event_id<br/>tardíos → late_events"]
+    SM["<b>silver_masters</b> · batch<br/>dim_org SCD2 · dim_user · dim_resource<br/>fact_billing USD"]
+    AN["<b>anomalies</b> · batch<br/>z robusto MAD por servicio+métrica"]
+  end
+
+  subgraph SG["5 · Silver y Gold · Parquet particionado por fecha"]
+    direction TB
+    SV[("Silver<br/>fact_usage_events + dims")]
+    GD[("Gold<br/>org_daily_usage_by_service<br/>cost_anomaly_mart")]
+  end
+
+  C[("6 · Serving · Cassandra 5 (Docker) o AstraDB · keyspace cpa<br/>usage_by_org_day_service (Q1) · cost_14d_by_org_service (Q2)")]
+  U["7 · Consumo · cqlsh / BI · FinOps: costo diario, top-N 14 días, anomalías"]
+  subgraph TXG["Transversales"]
+    direction TB
+    TX["<b>Observabilidad</b>: _metadata/run_log · query progress · reconciliation.json<br/><b>Calidad</b>: 11 reglas · quarantine · balance Landing = Bronze + descartes<br/><b>Seguridad</b>: secretos en .env · email → SHA-256 · Landing sólo lectura<br/><b>Linaje</b>: run_id + source_file por fila · git SHA por corrida"]
+  end
+
+  S4 --> T1 --> BR
+  S1 --> B1 --> BR
+  B1 -.->|corruptas / duplicadas| Q
+  BR --> T2 & RC & SM
+  RC -.-> Q
+  T2 -.->|Q01 · Q02 · Q05| Q
+  T2 & SM --> SV
+  SV --> AN
+  T2 --> GD
+  AN --> GD
+  T2 -->|upsert por PK| C
+  GD -->|etapa serving| C
+  C --> U
+  U ~~~ TXG
+
+  classDef stream fill:#fdf3e7,stroke:#b45309,color:#1f2937
+  classDef batch fill:#e8f1f8,stroke:#1e5a85,color:#1f2937
+  classDef store fill:#eef4f3,stroke:#0f766e,color:#1f2937
+  classDef bad fill:#fbeaea,stroke:#b42318,color:#1f2937
+  classDef note fill:#f7f7f5,stroke:#c8ccc9,color:#1f2937
+  class S4,T1,T2 stream
+  class S1,B1,RC,AN,SM batch
+  class BR,SV,GD,C store
+  class Q bad
+  class TX,U note

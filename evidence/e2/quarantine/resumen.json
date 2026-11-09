@@ -1,0 +1,14 @@
+{
+ "late_events": {
+  "rows": 0,
+  "by_rule": {},
+  "path": "datalake/quarantine/late_events"
+ },
+ "silver_usage_events": {
+  "rows": 211,
+  "by_rule": {
+   "Q02 · cost_usd_increment < -0.01 (anomalía de costo)": 211
+  },
+  "path": "datalake/quarantine/silver_usage_events"
+ }
+}

@@ -1,0 +1,54 @@
+run_id,stage,table,rows_in,rows_out,rows_quarantine,status,started_at,duration_s,detail,git_sha,config_file
+20261109T205958Z-d016ac,serving,connect,,,,OK,2026-11-09T20:59:58.592909+00:00,0.14,destino=local keyspace=cpa,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,pipeline,total,,,,OK,2026-11-09T20:59:58.728496+00:00,43.42,"etapas=bronze_batch,silver_masters,bronze_stream,silver_gold,reconcile,anomalies,serving",64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,customers_orgs,80,80,0,OK,2026-11-09T20:59:58.728505+00:00,2.82,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,users,800,800,0,OK,2026-11-09T21:00:01.548610+00:00,0.56,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,resources,400,400,0,OK,2026-11-09T21:00:02.112924+00:00,0.39,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,billing_monthly,240,240,0,OK,2026-11-09T21:00:02.505259+00:00,0.41,partition=month,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,support_tickets,1000,1000,0,OK,2026-11-09T21:00:02.915496+00:00,0.38,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,marketing_touches,1500,1500,0,OK,2026-11-09T21:00:03.294351+00:00,0.35,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_batch,nps_surveys,92,92,0,OK,2026-11-09T21:00:03.646867+00:00,0.35,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_masters,dim_org (SCD2),80,80,,OK,2026-11-09T21:00:04.000104+00:00,0.78,as_of=2026-11-09 vigentes=80,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_masters,dim_user,800,800,,OK,2026-11-09T21:00:04.783964+00:00,0.25,Q07 login_inconsistente=232 · email→sha256,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_masters,dim_resource,400,400,,OK,2026-11-09T21:00:05.033443+00:00,0.32,recursos con pii=85,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_masters,fact_billing,240,240,,OK,2026-11-09T21:00:05.357117+00:00,0.45,Q08 fx_sospechoso=144 Q09 nota_credito=13 Q10 credits_imputados=137,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,bronze_stream,usage_events,43200,43200,,OK,2026-11-09T21:00:05.806277+00:00,11.78,micro-batches=12 watermark=62 days descartados_por_watermark=0 total_bronze=43200,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_gold,foreachBatch,43200,,,OK,2026-11-09T21:00:17.583842+00:00,20.2,micro-batches procesados=4,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_events,fact_usage_events[batch 0],43200,42989,211,OK,2026-11-09T21:00:18.288015+00:00,2.94,fechas=60,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,gold_usage,org_daily_usage_by_service[batch 0],42989,11050,,OK,2026-11-09T21:00:21.226288+00:00,2.17,fechas=60 upsert_cassandra=11050,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_events,fact_usage_events[batch 1],43200,42989,211,OK,2026-11-09T21:00:23.814394+00:00,2.55,fechas=60,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,gold_usage,org_daily_usage_by_service[batch 1],42989,11050,,OK,2026-11-09T21:00:26.365485+00:00,2.1,fechas=60 upsert_cassandra=11050,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_events,fact_usage_events[batch 2],43200,42989,211,OK,2026-11-09T21:00:28.879606+00:00,2.2,fechas=60,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,gold_usage,org_daily_usage_by_service[batch 2],42989,11050,,OK,2026-11-09T21:00:31.078241+00:00,1.99,fechas=60 upsert_cassandra=11050,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,silver_events,fact_usage_events[batch 3],43200,42989,211,OK,2026-11-09T21:00:33.368203+00:00,2.12,fechas=60,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,gold_usage,org_daily_usage_by_service[batch 3],42989,11050,,OK,2026-11-09T21:00:35.492106+00:00,2.01,fechas=60 upsert_cassandra=11050,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,reconcile,late_events,43200,43200,0,OK,2026-11-09T21:00:37.787702+00:00,1.34,landing_rows=43200 bronze_rows=43200 duplicate_copies=0 late_dropped_by_watermark=0 without_key_or_time=0 watermark=62 days balanced=True,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,anomalies,cost_anomaly_mart,42989,11050,,OK,2026-11-09T21:00:39.123171+00:00,1.61,eventos_anomalos=191 org-dia-servicio_anomalos=190 metodo=robust_z_mad umbral=3.5,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,serving,usage_by_org_day_service,11050,11050,,OK,2026-11-09T21:00:40.833184+00:00,1.09,upserts=11050 destino=local,64eea13-dirty,config/pipeline.example.yaml
+20261109T205958Z-d016ac,serving,cost_14d_by_org_service,262,262,,OK,2026-11-09T21:00:41.923140+00:00,0.23,as_of=2025-08-31 inserts=262,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,serving,connect,,,,OK,2026-11-09T21:00:54.589274+00:00,0.07,destino=local keyspace=cpa,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,pipeline,total,,,,OK,2026-11-09T21:00:54.659466+00:00,13.35,"etapas=bronze_batch,silver_masters,bronze_stream,silver_gold,reconcile,anomalies,serving",64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,customers_orgs,80,80,0,OK,2026-11-09T21:00:54.659472+00:00,2.67,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,users,800,800,0,OK,2026-11-09T21:00:57.328525+00:00,0.54,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,resources,400,400,0,OK,2026-11-09T21:00:57.866980+00:00,0.51,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,billing_monthly,240,240,0,OK,2026-11-09T21:00:58.375898+00:00,0.41,partition=month,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,support_tickets,1000,1000,0,OK,2026-11-09T21:00:58.787500+00:00,0.37,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,marketing_touches,1500,1500,0,OK,2026-11-09T21:00:59.160201+00:00,0.37,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_batch,nps_surveys,92,92,0,OK,2026-11-09T21:00:59.526930+00:00,0.32,partition=ingest_date,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,silver_masters,dim_org (SCD2),80,80,,OK,2026-11-09T21:00:59.850881+00:00,1.13,as_of=2026-11-09 vigentes=80,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,silver_masters,dim_user,800,800,,OK,2026-11-09T21:01:00.980369+00:00,0.24,Q07 login_inconsistente=232 · email→sha256,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,silver_masters,dim_resource,400,400,,OK,2026-11-09T21:01:01.225120+00:00,0.34,recursos con pii=85,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,silver_masters,fact_billing,240,240,,OK,2026-11-09T21:01:01.568805+00:00,0.39,Q08 fx_sospechoso=144 Q09 nota_credito=13 Q10 credits_imputados=137,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,bronze_stream,usage_events,0,0,,OK,2026-11-09T21:01:01.954330+00:00,0.69,micro-batches=1 watermark=62 days descartados_por_watermark=0 total_bronze=43200,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,silver_gold,foreachBatch,0,,,OK,2026-11-09T21:01:02.647960+00:00,0.41,micro-batches procesados=0,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,reconcile,late_events,43200,43200,0,OK,2026-11-09T21:01:03.054249+00:00,1.72,landing_rows=43200 bronze_rows=43200 duplicate_copies=0 late_dropped_by_watermark=0 without_key_or_time=0 watermark=62 days balanced=True,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,anomalies,cost_anomaly_mart,42989,11050,,OK,2026-11-09T21:01:04.777067+00:00,1.81,eventos_anomalos=191 org-dia-servicio_anomalos=190 metodo=robust_z_mad umbral=3.5,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,serving,usage_by_org_day_service,11050,11050,,OK,2026-11-09T21:01:06.709284+00:00,1.09,upserts=11050 destino=local,64eea13-dirty,config/pipeline.example.yaml
+20261109T210054Z-d5f027,serving,cost_14d_by_org_service,262,262,,OK,2026-11-09T21:01:07.797427+00:00,0.21,as_of=2025-08-31 inserts=262,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,serving,connect,,,,OK,2026-11-09T21:01:19.763022+00:00,0.07,destino=local keyspace=cpa,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,pipeline,total,,,,OK,2026-11-09T21:01:19.838028+00:00,12.16,"etapas=backfill,anomalies,serving",64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,silver_events,fact_usage_events[batch backfill],43200,42989,211,OK,2026-11-09T21:01:21.773834+00:00,4.62,fechas=60,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,gold_usage,org_daily_usage_by_service[batch backfill],42989,11050,,OK,2026-11-09T21:01:26.398410+00:00,2.37,fechas=60 upsert_cassandra=11050,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,anomalies,cost_anomaly_mart,42989,11050,,OK,2026-11-09T21:01:28.769336+00:00,1.86,eventos_anomalos=191 org-dia-servicio_anomalos=190 metodo=robust_z_mad umbral=3.5,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,serving,usage_by_org_day_service,11050,11050,,OK,2026-11-09T21:01:30.740868+00:00,1.01,upserts=11050 destino=local,64eea13-dirty,config/pipeline.example.yaml
+20261109T210119Z-76b759,serving,cost_14d_by_org_service,262,262,,OK,2026-11-09T21:01:31.752692+00:00,0.25,as_of=2025-08-31 inserts=262,64eea13-dirty,config/pipeline.example.yaml

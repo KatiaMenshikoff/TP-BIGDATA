@@ -1,0 +1,21 @@
+org_id,service,daily_cost_usd,requests,cpu_hours,storage_gb_hours,genai_tokens,carbon_kg,events,events_value_unparseable,max_schema_version,org_name,plan_tier,gold_run_id,usage_date
+org_rixa11dp,genai,340.5259,390.0,0.0473,8.3086,5646,0.079671,6,0,2,Vertex AI 53,standard,20261109T210119Z-76b759,2025-08-24
+org_c11ertj5,genai,334.6767,237.0,0.0,12.9349,0,0.0,3,0,1,Apex Cloud 17,pro,20261109T210119Z-76b759,2025-07-11
+org_tvhhpbmy,genai,313.4168,210.0,1.3851,0.0,0,0.0,3,0,1,Nova Tech 61,enterprise,20261109T210119Z-76b759,2025-07-04
+org_x7eedtjv,compute,311.255,249.0,1.8107,0.0,0,0.0,3,0,1,Apex Cloud 34,pro,20261109T210119Z-76b759,2025-07-09
+org_5935a0l7,compute,271.6404,267.0,1.1745,7.2181,0,0.0,6,0,1,Omega Digital 40,standard,20261109T210119Z-76b759,2025-07-09
+org_c11ertj5,genai,265.2402,235.0,0.7329,0.0,2522,0.047147,3,0,2,Apex Cloud 17,pro,20261109T210119Z-76b759,2025-08-05
+org_5935a0l7,compute,264.4856,611.0,1.8931,0.0,0,0.0,6,0,1,Omega Digital 40,standard,20261109T210119Z-76b759,2025-07-15
+org_1t2tala7,compute,257.364,348.0,5.8145,14.253,0,0.073614,6,0,2,Gamma Data 15,enterprise,20261109T210119Z-76b759,2025-08-23
+org_pht0hl9x,analytics,257.042,246.0,5.477,0.0,0,0.050295,3,0,2,Nimbus Data 18,pro,20261109T210119Z-76b759,2025-08-25
+org_kdgigatj,compute,251.643,839.0,1.6573,1.1481,0,0.0,9,0,1,Zenith Tech 79,standard,20261109T210119Z-76b759,2025-07-17
+org_afeyuhz1,compute,243.2824,563.0,4.6836,0.0,0,0.113537,6,0,2,Gamma Labs 66,standard,20261109T210119Z-76b759,2025-08-07
+org_cwi64ciy,compute,242.6097,958.0,1.4566,0.0,0,0.191891,9,0,2,Gamma Digital 20,standard,20261109T210119Z-76b759,2025-08-10
+org_chj755nf,compute,237.4721,730.0,0.0,27.4033,0,0.15148,9,0,2,Delta Tech 32,pro,20261109T210119Z-76b759,2025-08-17
+org_zbikcidk,compute,236.1087,614.0,0.0,12.1627,0,0.125233,6,0,2,Omega Tech 5,pro,20261109T210119Z-76b759,2025-07-30
+org_0lvsnujz,analytics,235.7677,390.0,0.0,0.0,0,0.078,3,0,2,Nova Cloud 45,standard,20261109T210119Z-76b759,2025-08-29
+org_pac56t4u,compute,235.5387,976.0,0.0,0.0,0,0.1952,9,0,2,Gamma Cloud 37,enterprise,20261109T210119Z-76b759,2025-07-18
+org_ir4cowgz,analytics,229.7084,377.0,0.0,44.122,0,0.084225,6,0,2,Delta Tech 52,standard,20261109T210119Z-76b759,2025-07-21
+org_uzfk8ut0,compute,227.781,214.0,1.4011,9.7048,0,0.0,6,0,1,Omega Data 27,standard,20261109T210119Z-76b759,2025-07-11
+org_afeyuhz1,compute,227.094,593.0,3.1803,0.0,0,0.0,6,0,1,Gamma Labs 66,standard,20261109T210119Z-76b759,2025-07-07
+org_he7ur23g,compute,225.2637,241.0,0.0,0.1517,0,0.04823,3,0,2,Alpha Labs 21,free,20261109T210119Z-76b759,2025-08-04

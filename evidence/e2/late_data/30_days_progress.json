@@ -1,0 +1,792 @@
+[
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:19.377Z",
+  "batchId": 0,
+  "batchDuration": 2982,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 0.0,
+  "processedRowsPerSecond": 1207.2434607645876,
+  "durationMs": {
+   "addBatch": 2557,
+   "commitOffsets": 64,
+   "getBatch": 22,
+   "latestOffset": 34,
+   "queryPlanning": 262,
+   "triggerExecution": 2980,
+   "walCommit": 32
+  },
+  "eventTime": {
+   "avg": "2025-08-01T11:17:41.316Z",
+   "max": "2025-08-31T23:42:00.000Z",
+   "min": "2025-07-03T00:02:00.000Z",
+   "watermark": "1970-01-01T00:00:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 3600,
+    "numRowsUpdated": 3600,
+    "allUpdatesTimeMs": 68,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 1,
+    "commitTimeMs": 183,
+    "memoryUsedBytes": 650176,
+    "numRowsDroppedByWatermark": 0,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 0,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 649024
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": null,
+    "endOffset": {
+     "logOffset": 0
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 0.0,
+    "processedRowsPerSecond": 1207.2434607645876
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:22.364Z",
+  "batchId": 1,
+  "batchDuration": 1045,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 1205.2226314027453,
+  "processedRowsPerSecond": 3444.976076555024,
+  "durationMs": {
+   "addBatch": 926,
+   "commitOffsets": 26,
+   "getBatch": 7,
+   "latestOffset": 31,
+   "queryPlanning": 16,
+   "triggerExecution": 1045,
+   "walCommit": 36
+  },
+  "eventTime": {
+   "avg": "2025-08-01T18:05:26.633Z",
+   "max": "2025-08-31T22:14:00.000Z",
+   "min": "2025-07-03T00:11:00.000Z",
+   "watermark": "2025-08-01T23:42:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 7200,
+    "numRowsUpdated": 3600,
+    "allUpdatesTimeMs": 53,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 163,
+    "memoryUsedBytes": 1805600,
+    "numRowsDroppedByWatermark": 0,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 8,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 1278912
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 0
+    },
+    "endOffset": {
+     "logOffset": 1
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 1205.2226314027453,
+    "processedRowsPerSecond": 3444.976076555024
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:23.410Z",
+  "batchId": 2,
+  "batchDuration": 732,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 3441.682600382409,
+  "processedRowsPerSecond": 4918.032786885246,
+  "durationMs": {
+   "addBatch": 638,
+   "commitOffsets": 26,
+   "getBatch": 5,
+   "latestOffset": 26,
+   "queryPlanning": 9,
+   "triggerExecution": 732,
+   "walCommit": 26
+  },
+  "eventTime": {
+   "avg": "2025-08-01T23:40:50.849Z",
+   "max": "2025-08-31T23:35:00.000Z",
+   "min": "2025-07-03T01:09:00.000Z",
+   "watermark": "2025-08-01T23:42:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 9009,
+    "numRowsUpdated": 1809,
+    "allUpdatesTimeMs": 52,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 174,
+    "memoryUsedBytes": 2863488,
+    "numRowsDroppedByWatermark": 1791,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 16,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 1628032
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 1
+    },
+    "endOffset": {
+     "logOffset": 2
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 3441.682600382409,
+    "processedRowsPerSecond": 4918.032786885246
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:24.142Z",
+  "batchId": 3,
+  "batchDuration": 674,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 4918.032786885246,
+  "processedRowsPerSecond": 5341.246290801187,
+  "durationMs": {
+   "addBatch": 585,
+   "commitOffsets": 25,
+   "getBatch": 4,
+   "latestOffset": 25,
+   "queryPlanning": 8,
+   "triggerExecution": 674,
+   "walCommit": 25
+  },
+  "eventTime": {
+   "avg": "2025-08-02T00:53:26.883Z",
+   "max": "2025-08-31T23:44:00.000Z",
+   "min": "2025-07-03T00:48:00.000Z",
+   "watermark": "2025-08-01T23:42:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 10805,
+    "numRowsUpdated": 1796,
+    "allUpdatesTimeMs": 57,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 173,
+    "memoryUsedBytes": 2223488,
+    "numRowsDroppedByWatermark": 1804,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 24,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 1889152
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 2
+    },
+    "endOffset": {
+     "logOffset": 3
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 4918.032786885246,
+    "processedRowsPerSecond": 5341.246290801187
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:24.816Z",
+  "batchId": 4,
+  "batchDuration": 717,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5341.246290801187,
+  "processedRowsPerSecond": 5020.920502092051,
+  "durationMs": {
+   "addBatch": 628,
+   "commitOffsets": 28,
+   "getBatch": 4,
+   "latestOffset": 25,
+   "queryPlanning": 7,
+   "triggerExecution": 717,
+   "walCommit": 24
+  },
+  "eventTime": {
+   "avg": "2025-08-02T12:54:52.100Z",
+   "max": "2025-08-31T23:48:00.000Z",
+   "min": "2025-07-03T01:03:00.000Z",
+   "watermark": "2025-08-01T23:44:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 12656,
+    "numRowsUpdated": 1851,
+    "allUpdatesTimeMs": 53,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 183,
+    "memoryUsedBytes": 3446368,
+    "numRowsDroppedByWatermark": 1749,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 32,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 2296256
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 3
+    },
+    "endOffset": {
+     "logOffset": 4
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5341.246290801187,
+    "processedRowsPerSecond": 5020.920502092051
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:25.533Z",
+  "batchId": 5,
+  "batchDuration": 691,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5020.920502092051,
+  "processedRowsPerSecond": 5209.840810419682,
+  "durationMs": {
+   "addBatch": 591,
+   "commitOffsets": 25,
+   "getBatch": 6,
+   "latestOffset": 27,
+   "queryPlanning": 14,
+   "triggerExecution": 691,
+   "walCommit": 26
+  },
+  "eventTime": {
+   "avg": "2025-08-01T11:02:23.116Z",
+   "max": "2025-08-31T23:44:00.000Z",
+   "min": "2025-07-03T00:48:00.000Z",
+   "watermark": "2025-08-01T23:48:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 14399,
+    "numRowsUpdated": 1743,
+    "allUpdatesTimeMs": 52,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 174,
+    "memoryUsedBytes": 3993856,
+    "numRowsDroppedByWatermark": 1857,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 40,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 2664000
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 4
+    },
+    "endOffset": {
+     "logOffset": 5
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5020.920502092051,
+    "processedRowsPerSecond": 5209.840810419682
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:26.224Z",
+  "batchId": 6,
+  "batchDuration": 664,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5209.840810419682,
+  "processedRowsPerSecond": 5421.686746987952,
+  "durationMs": {
+   "addBatch": 576,
+   "commitOffsets": 24,
+   "getBatch": 4,
+   "latestOffset": 25,
+   "queryPlanning": 6,
+   "triggerExecution": 664,
+   "walCommit": 26
+  },
+  "eventTime": {
+   "avg": "2025-08-01T21:59:10.200Z",
+   "max": "2025-08-31T23:56:00.000Z",
+   "min": "2025-07-03T00:34:00.000Z",
+   "watermark": "2025-08-01T23:48:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 16205,
+    "numRowsUpdated": 1806,
+    "allUpdatesTimeMs": 49,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 168,
+    "memoryUsedBytes": 3629184,
+    "numRowsDroppedByWatermark": 1794,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 48,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 3083136
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 5
+    },
+    "endOffset": {
+     "logOffset": 6
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5209.840810419682,
+    "processedRowsPerSecond": 5421.686746987952
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:26.889Z",
+  "batchId": 7,
+  "batchDuration": 680,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5413.533834586466,
+  "processedRowsPerSecond": 5294.117647058823,
+  "durationMs": {
+   "addBatch": 591,
+   "commitOffsets": 27,
+   "getBatch": 5,
+   "latestOffset": 24,
+   "queryPlanning": 7,
+   "triggerExecution": 680,
+   "walCommit": 24
+  },
+  "eventTime": {
+   "avg": "2025-08-01T19:49:34.583Z",
+   "max": "2025-08-31T23:58:00.000Z",
+   "min": "2025-07-03T00:17:00.000Z",
+   "watermark": "2025-08-01T23:56:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 17980,
+    "numRowsUpdated": 1775,
+    "allUpdatesTimeMs": 51,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 204,
+    "memoryUsedBytes": 4086080,
+    "numRowsDroppedByWatermark": 1825,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 56,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 3351360
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 6
+    },
+    "endOffset": {
+     "logOffset": 7
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5413.533834586466,
+    "processedRowsPerSecond": 5294.117647058823
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:27.569Z",
+  "batchId": 8,
+  "batchDuration": 674,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5294.117647058823,
+  "processedRowsPerSecond": 5341.246290801187,
+  "durationMs": {
+   "addBatch": 585,
+   "commitOffsets": 27,
+   "getBatch": 4,
+   "latestOffset": 26,
+   "queryPlanning": 6,
+   "triggerExecution": 674,
+   "walCommit": 24
+  },
+  "eventTime": {
+   "avg": "2025-08-02T00:41:07.633Z",
+   "max": "2025-08-31T23:51:00.000Z",
+   "min": "2025-07-03T00:05:00.000Z",
+   "watermark": "2025-08-01T23:58:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 19788,
+    "numRowsUpdated": 1808,
+    "allUpdatesTimeMs": 48,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 170,
+    "memoryUsedBytes": 4354336,
+    "numRowsDroppedByWatermark": 1792,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 64,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 3615360
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 7
+    },
+    "endOffset": {
+     "logOffset": 8
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5294.117647058823,
+    "processedRowsPerSecond": 5341.246290801187
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:28.243Z",
+  "batchId": 9,
+  "batchDuration": 665,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5341.246290801187,
+  "processedRowsPerSecond": 5413.533834586466,
+  "durationMs": {
+   "addBatch": 572,
+   "commitOffsets": 25,
+   "getBatch": 3,
+   "latestOffset": 33,
+   "queryPlanning": 6,
+   "triggerExecution": 665,
+   "walCommit": 25
+  },
+  "eventTime": {
+   "avg": "2025-08-02T03:34:44.116Z",
+   "max": "2025-08-31T23:50:00.000Z",
+   "min": "2025-07-03T00:26:00.000Z",
+   "watermark": "2025-08-01T23:58:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 21612,
+    "numRowsUpdated": 1824,
+    "allUpdatesTimeMs": 55,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 155,
+    "memoryUsedBytes": 4766528,
+    "numRowsDroppedByWatermark": 1776,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 72,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 3973440
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 8
+    },
+    "endOffset": {
+     "logOffset": 9
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5341.246290801187,
+    "processedRowsPerSecond": 5413.533834586466
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:28.908Z",
+  "batchId": 10,
+  "batchDuration": 629,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5413.533834586466,
+  "processedRowsPerSecond": 5723.370429252782,
+  "durationMs": {
+   "addBatch": 544,
+   "commitOffsets": 26,
+   "getBatch": 4,
+   "latestOffset": 24,
+   "queryPlanning": 6,
+   "triggerExecution": 629,
+   "walCommit": 24
+  },
+  "eventTime": {
+   "avg": "2025-08-01T23:36:53.833Z",
+   "max": "2025-08-31T21:40:00.000Z",
+   "min": "2025-07-03T00:11:00.000Z",
+   "watermark": "2025-08-01T23:58:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 23397,
+    "numRowsUpdated": 1785,
+    "allUpdatesTimeMs": 55,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 159,
+    "memoryUsedBytes": 6938144,
+    "numRowsDroppedByWatermark": 1815,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 80,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 4504832
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 9
+    },
+    "endOffset": {
+     "logOffset": 10
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5413.533834586466,
+    "processedRowsPerSecond": 5723.370429252782
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ },
+ {
+  "id": "de418768-3285-46f0-9b46-bbfd0ccc91c4",
+  "runId": "52550092-fa99-4c66-a5b9-d50a5c8c1246",
+  "name": "bronze_usage_events",
+  "timestamp": "2026-11-09T20:59:29.538Z",
+  "batchId": 11,
+  "batchDuration": 634,
+  "numInputRows": 3600,
+  "inputRowsPerSecond": 5714.285714285715,
+  "processedRowsPerSecond": 5678.233438485804,
+  "durationMs": {
+   "addBatch": 549,
+   "commitOffsets": 25,
+   "getBatch": 4,
+   "latestOffset": 25,
+   "queryPlanning": 6,
+   "triggerExecution": 634,
+   "walCommit": 25
+  },
+  "eventTime": {
+   "avg": "2025-08-02T19:54:29.416Z",
+   "max": "2025-08-31T23:35:00.000Z",
+   "min": "2025-07-03T00:08:00.000Z",
+   "watermark": "2025-08-01T23:58:00.000Z"
+  },
+  "stateOperators": [
+   {
+    "operatorName": "dedupeWithinWatermark",
+    "numRowsTotal": 25294,
+    "numRowsUpdated": 1897,
+    "allUpdatesTimeMs": 47,
+    "numRowsRemoved": 0,
+    "allRemovalsTimeMs": 0,
+    "commitTimeMs": 163,
+    "memoryUsedBytes": 7760192,
+    "numRowsDroppedByWatermark": 1703,
+    "numShufflePartitions": 8,
+    "numStateStoreInstances": 8,
+    "customMetrics": {
+     "loadedMapCacheHitCount": 88,
+     "loadedMapCacheMissCount": 0,
+     "numDroppedDuplicateRows": 0,
+     "stateOnCurrentVersionSizeBytes": 5134336
+    }
+   }
+  ],
+  "sources": [
+   {
+    "description": "FileStreamSource[file:datalake_demo/wm_30_days/landing/usage_events_stream]",
+    "startOffset": {
+     "logOffset": 10
+    },
+    "endOffset": {
+     "logOffset": 11
+    },
+    "latestOffset": null,
+    "numInputRows": 3600,
+    "inputRowsPerSecond": 5714.285714285715,
+    "processedRowsPerSecond": 5678.233438485804
+   }
+  ],
+  "sink": {
+   "description": "FileSink[file:datalake_demo/wm_30_days/bronze/usage_events]",
+   "numOutputRows": -1
+  }
+ }
+]

@@ -1,0 +1,13 @@
+root
+ |-- touch_id: string (nullable = true)
+ |-- org_id: string (nullable = true)
+ |-- campaign: string (nullable = true)
+ |-- channel: string (nullable = true)
+ |-- timestamp: date (nullable = true)
+ |-- clicked: boolean (nullable = true)
+ |-- converted: boolean (nullable = true)
+ |-- ingest_ts: timestamp (nullable = true)
+ |-- source_file: string (nullable = true)
+ |-- run_id: string (nullable = true)
+ |-- record_hash: string (nullable = true)
+ |-- ingest_date: date (nullable = true)

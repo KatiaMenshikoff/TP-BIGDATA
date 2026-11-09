@@ -1,0 +1,20 @@
+{
+ "2": {
+  "schema_version": 2,
+  "eventos": 32251,
+  "Q03_unit_derivada": 1524,
+  "Q04_value_no_casteable": 0,
+  "value_nulo": 652,
+  "con_carbon_kg": 32251,
+  "con_genai_tokens": 3117
+ },
+ "1": {
+  "schema_version": 1,
+  "eventos": 10738,
+  "Q03_unit_derivada": 545,
+  "Q04_value_no_casteable": 0,
+  "value_nulo": 221,
+  "con_carbon_kg": 0,
+  "con_genai_tokens": 0
+ }
+}

@@ -1,0 +1,3 @@
+[run_log] bronze_stream      usage_events                 in=43200 out=11433 q=None OK 10.38s micro-batches=12 watermark=7 days descartados_por_watermark=31767 total_bronze=11433
+[run_log] reconcile          late_events                  in=43200 out=11433 q=31767 OK 1.94s landing_rows=43200 bronze_rows=11433 duplicate_copies=0 late_dropped_by_watermark=31767 without_key_or_time=0 watermark=7 days balanced=True
+[run_log] pipeline           total                        in=None out=None q=None OK 12.32s etapas=bronze_stream,reconcile

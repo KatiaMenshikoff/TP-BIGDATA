@@ -1,0 +1,9 @@
+run_id=20261109T210119Z-76b759 lake=datalake config=config/pipeline.example.yaml
+[run_log] serving            connect                      in=None out=None q=None OK 0.07s destino=local keyspace=cpa
+[run_log] silver_events      fact_usage_events[batch backfill] in=43200 out=42989 q=211 OK 4.62s fechas=60
+[run_log] gold_usage         org_daily_usage_by_service[batch backfill] in=42989 out=11050 q=None OK 2.37s fechas=60 upsert_cassandra=11050
+[run_log] anomalies          cost_anomaly_mart            in=42989 out=11050 q=None OK 1.86s eventos_anomalos=191 org-dia-servicio_anomalos=190 metodo=robust_z_mad umbral=3.5
+[run_log] serving            usage_by_org_day_service     in=11050 out=11050 q=None OK 1.01s upserts=11050 destino=local
+[run_log] serving            cost_14d_by_org_service      in=262 out=262 q=None OK 0.25s as_of=2025-08-31 inserts=262
+[run_log] pipeline           total                        in=None out=None q=None OK 12.16s etapas=backfill,anomalies,serving
+OK run_id=20261109T210119Z-76b759

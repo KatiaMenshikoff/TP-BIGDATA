@@ -1,0 +1,11 @@
+root
+ |-- org_id: string (nullable = true)
+ |-- service: string (nullable = true)
+ |-- daily_cost_usd: double (nullable = true)
+ |-- events: long (nullable = true)
+ |-- anomalous_events: long (nullable = true)
+ |-- anomalous_cost_usd: double (nullable = true)
+ |-- max_abs_robust_z: double (nullable = true)
+ |-- is_anomaly: boolean (nullable = true)
+ |-- method: string (nullable = true)
+ |-- date: date (nullable = true)

@@ -1,0 +1,29 @@
+{
+ "resumen": {
+  "filas": 11050,
+  "filas_anomalas": 190,
+  "eventos_anomalos": 191,
+  "eventos": 42989,
+  "costo_anomalo_usd": 11174.113600000004,
+  "costo_total_usd": 148351.57590000005,
+  "orgs_afectadas": 69,
+  "pct_eventos_anomalos": 0.444,
+  "pct_costo_anomalo": 7.53
+ },
+ "filas_anomalas_por_servicio": {
+  "database": 30,
+  "storage": 35,
+  "networking": 26,
+  "compute": 64,
+  "analytics": 20,
+  "genai": 15
+ },
+ "metodo": {
+  "method": "robust_z_mad",
+  "group_by": [
+   "service",
+   "metric"
+  ],
+  "threshold": 3.5
+ }
+}

@@ -1,0 +1,16 @@
+org_id,service,daily_cost_usd,events,anomalous_events,anomalous_cost_usd,max_abs_robust_z,is_anomaly,method,date
+org_pht0hl9x,analytics,257.042,3,1,249.3861,170.0194,True,robust_z_mad|service+metric|3.5,2025-08-25
+org_x7eedtjv,compute,311.255,3,1,302.3459,168.5043,True,robust_z_mad|service+metric|3.5,2025-07-09
+org_0lvsnujz,analytics,235.7677,3,1,221.2907,150.201,True,robust_z_mad|service+metric|3.5,2025-08-29
+org_5935a0l7,compute,271.6404,6,1,261.3299,144.9011,True,robust_z_mad|service+metric|3.5,2025-07-09
+org_ujv6oh9s,storage,71.9992,9,1,62.9922,143.1219,True,robust_z_mad|service+metric|3.5,2025-08-20
+org_ir4cowgz,analytics,229.7084,6,1,209.8516,142.1319,True,robust_z_mad|service+metric|3.5,2025-07-21
+org_he7ur23g,database,150.5344,3,1,149.9091,137.406,True,robust_z_mad|service+metric|3.5,2025-07-23
+org_5iqvnb4g,networking,31.9191,3,1,29.6319,132.605,True,robust_z_mad|service+metric|3.5,2025-07-11
+org_g8sbi4q2,database,142.947,3,1,142.4331,130.2697,True,robust_z_mad|service+metric|3.5,2025-08-05
+org_1t2tala7,compute,257.364,6,1,233.7277,129.0171,True,robust_z_mad|service+metric|3.5,2025-08-23
+org_9mx2x18h,database,147.3464,6,1,140.9501,128.854,True,robust_z_mad|service+metric|3.5,2025-08-10
+org_9t84azyt,database,147.5435,6,1,139.8955,127.8473,True,robust_z_mad|service+metric|3.5,2025-08-23
+org_5935a0l7,compute,264.4856,6,1,226.2863,124.7349,True,robust_z_mad|service+metric|3.5,2025-07-15
+org_c11ertj5,genai,334.6767,3,1,317.4308,123.479,True,robust_z_mad|service+metric|3.5,2025-07-11
+org_pseimvih,storage,60.5768,6,1,54.3949,122.8142,True,robust_z_mad|service+metric|3.5,2025-08-08

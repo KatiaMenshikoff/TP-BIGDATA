@@ -1,0 +1,16 @@
+event_id,schema_version,metric,value_raw,value,unit,flag_unit_derived,flag_value_unparseable,carbon_kg,genai_tokens,org_name,plan_tier
+evt_dhk9ugoygtcx,2,storage_gb_hours,7.0444,7.0444,gb_hours,True,False,0.001409,,Beta Cloud 23,pro
+evt_gwecc27tl9w6,2,cpu_hours,2.9932,2.9932,hours,True,False,0.000599,800.0,Nimbus Cloud 56,enterprise
+evt_id4xc1lo59tw,2,requests,,,count,False,False,0.0,,Zenith Tech 41,standard
+evt_nmqlp7u5wjyb,2,cpu_hours,0.0,0.0,hours,True,False,0.0,,Vertex Cloud 69,pro
+evt_p11otff9zcsu,2,requests,,,count,False,False,0.0,,Zenith AI 30,free
+evt_to57sdonlnux,2,requests,108.0,108.0,count,True,False,0.0216,,Nova Data 50,enterprise
+evt_x1c7l8ckgv9v,2,requests,135.0,135.0,count,True,False,0.027,,Omega Labs 9,free
+evt_1gmfildg5oo6,2,requests,114.0,114.0,count,True,False,0.0228,1078.0,Omega Data 27,standard
+evt_4t4vej76h7e9,2,requests,140.0,140.0,count,True,False,0.028,,Omega Tech 31,pro
+evt_a4m8iwyyb2xk,2,cpu_hours,1.4678,1.4678,hours,True,False,0.000294,,Delta Digital 49,pro
+evt_djt3dm7utnzp,2,requests,111.0,111.0,count,True,False,0.0222,,Omega Digital 40,standard
+evt_dxkdb8ghc8dj,2,cpu_hours,0.0,0.0,hours,True,False,0.0,,Delta Digital 49,pro
+evt_ht5hbstskzit,2,cpu_hours,,,hours,False,False,0.0,,Nova Labs 63,standard
+evt_qzvfe3gsbvxs,2,requests,125.0,125.0,count,True,False,0.025,,Vertex Cloud 69,pro
+evt_0m3kpw9qufno,2,storage_gb_hours,2.6773,2.6773,gb_hours,True,False,0.000535,,Gamma Tech 51,standard
