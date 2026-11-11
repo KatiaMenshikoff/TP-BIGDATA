@@ -10,9 +10,6 @@ Autores:
 - Katia Menshikoff · Legajo 64396
 - Julián Ariel Szarfmeser · Legajo 67032
 
-> Este documento cubre los 12 componentes del alcance mínimo (consigna, Sección 6.2). Cada sección indica a qué componente responde.
-> Todas las cifras salen de `evidence/e2/`, que genera `PYTHONPATH=src python -m cpa.evidence` a partir del lake y se puede volver a generar. El diseño de referencia sigue siendo el documento v1 (`docs/01_documento_diseno.md`); acá se documenta lo implementado y lo que cambió.
-
 ---
 
 ## 0. Resumen ejecutivo
@@ -33,7 +30,7 @@ Autores:
 
 ---
 
-## 1. Correcciones de la Entrega 1 y arquitectura actualizada (consigna 6.2 · Correcciones y arquitectura)
+## 1. Correcciones de la Entrega 1 y arquitectura actualizada
 
 El plan de correcciones completo, con prioridad, responsable, fecha y evidencia, está en [`03_plan_correcciones.md`](03_plan_correcciones.md). Resumen:
 
@@ -57,14 +54,14 @@ _Fuente editable: [`diagramas/arquitectura_v2.mmd`](diagramas/arquitectura_v2.mm
 | Late data | Batch diario de reconciliación por `source_file` | Etapa `reconcile` por `event_id` con balance que debe cerrar (si no, la corrida falla) | Un balance por clave detecta duplicados, tardíos y filas sin clave por separado |
 | Serving | AstraDB | Cassandra 5 en Docker por defecto; AstraDB con el mismo código vía `.env` (D-11) | Riesgo K4: demo reproducible sin red ni credenciales |
 | Carga a Cassandra | A decidir (A5) | `cassandra-driver` con `INSERT` preparados concurrentes (D-12) | Funciona con Spark 4 sin JARs |
-| Marts | 5 marts | `org_daily_usage_by_service` y `cost_anomaly_mart`; los otros 3 en el backlog | Alcance de la E2 (consigna 6.2) |
+| Marts | 5 marts | `org_daily_usage_by_service` y `cost_anomaly_mart`; los otros 3 en el backlog | Alcance de la E2 |
 | Parseo de tiempos | `to_timestamp` | `try_to_timestamp` (D-15) | Con ANSI (Spark 4) un dato malo cortaba el stream |
 
 ---
 
-## 2. Batch a Bronze (consigna 6.2 · Batch a Bronze)
+## 2. Batch a Bronze
 
-Etapa `bronze_batch` (`src/cpa/pipeline.py`). Se ingieren las **7 fuentes CSV** (la consigna pide al menos 3 maestros).
+Etapa `bronze_batch` (`src/cpa/pipeline.py`). Se ingieren las **7 fuentes CSV**.
 
 | Paso | Implementación |
 |---|---|
@@ -90,7 +87,7 @@ _Evidencia: `evidence/e2/lake_inventory.md` (rutas y tamaños) y `evidence/e2/es
 
 ---
 
-## 3. Streaming a Bronze (consigna 6.2 · Streaming a Bronze)
+## 3. Streaming a Bronze
 
 <img src="diagramas/flujo_streaming_v2.png" alt="Flujo streaming v2" style="width:46%">
 
@@ -133,7 +130,7 @@ Dos verificaciones: (1) el conteo de la reconciliación coincide exactamente con
 
 ---
 
-## 4. Silver (consigna 6.2 · Silver)
+## 4. Silver
 
 ### 4.1 Eventos: `silver/fact_usage_events`
 
@@ -146,7 +143,7 @@ La etapa `silver_gold` lee Bronze como stream (query 2, checkpoint `_checkpoints
 | Q03 unit nula | Se deriva de `metric` (`requests→count`, `cpu_hours→hours`, `storage_gb_hours→gb_hours`) + `flag_unit_derived` | 2.069 derivadas (las otras 6 de las 2.075 del perfil están en quarantine) |
 | Evolución de esquema | v1 sin `carbon_kg`/`genai_tokens` (quedan nulos, no 0); `schema_version` conservado | v1: 10.738 · v2: 32.251 eventos |
 | Joins de enriquecimiento | `broadcast` de `dim_org` vigente (nombre, industria, plan, región) y `dim_resource` (estado, PII) | 100 % de match |
-| Features por evento | `cost_usd`, `requests`, `cpu_hours`, `storage_gb_hours` (pivot de `metric`/`value`), `genai_tokens`, `carbon_kg` | 6 features (la consigna pide 3) |
+| Features por evento | `cost_usd`, `requests`, `cpu_hours`, `storage_gb_hours` (pivot de `metric`/`value`), `genai_tokens`, `carbon_kg` | 6 features |
 
 _Evidencia: `evidence/e2/muestras/silver_correcciones_Q03_Q04.csv`, `silver_flags.json` y `esquemas/silver.fact_usage_events.txt`._
 
@@ -161,17 +158,17 @@ _Evidencia: `evidence/e2/muestras/silver_correcciones_Q03_Q04.csv`, `silver_flag
 
 ---
 
-## 5. Calidad y quarantine (consigna 6.2 · Calidad)
+## 5. Calidad y quarantine
 
-Reglas activas (las de la consigna marcadas con ★):
+Reglas activas:
 
 | ID | Regla | Tipo | Dónde | Registros afectados |
 |---|---|---|---|---|
 | B00–B02 | CSV no parseable / clave nula / clave duplicada | Bloqueante → `quarantine/bronze_*` | Bronze batch | 0 (tras corregir el `escape`) |
-| ★ Q01 | `event_id` no nulo y único | Bloqueante → quarantine | Bronze stream (dedup) + Silver | 0 nulos, 0 duplicados |
+| Q01 | `event_id` no nulo y único | Bloqueante → quarantine | Bronze stream (dedup) + Silver | 0 nulos, 0 duplicados |
 | Q00 | `event_ts` parseable | Bloqueante → quarantine | Silver / reconcile | 0 |
-| ★ Q02 | `cost_usd_increment >= -0.01`; si no, quarantine con `flag_cost_anomaly` | Bloqueante | Silver | **211** |
-| ★ Q03 | `unit` no nula cuando hay `value` (se deriva de `metric`) | Corrección + flag | Silver | 2.069 |
+| Q02 | `cost_usd_increment >= -0.01`; si no, quarantine con `flag_cost_anomaly` | Bloqueante | Silver | **211** |
+| Q03 | `unit` no nula cuando hay `value` (se deriva de `metric`) | Corrección + flag | Silver | 2.069 |
 | Q04 | `value` casteable a double | Corrección + flag | Silver | 0 no casteables |
 | Q05 | `org_id` y `resource_id` existen en las dimensiones | Bloqueante | Silver | 0 |
 | Q07 | `last_login >= created_at` | Advertencia (flag) | `dim_user` | 232 |
@@ -192,7 +189,7 @@ Cada fila en quarantine lleva `rule_id`, `reason`, `quarantine_ts`, el `run_id` 
 
 ---
 
-## 6. Gold (consigna 6.2 · Gold)
+## 6. Gold
 
 `gold/org_daily_usage_by_service` · grano **org_id × usage_date × service** · partición `usage_date` · 11.050 filas en 60 archivos.
 
@@ -209,7 +206,7 @@ Cada fila en quarantine lleva `rule_id`, `reason`, `quarantine_ts`, el `run_id` 
 
 ---
 
-## 7. Serving en Cassandra (consigna 6.2 · Serving)
+## 7. Serving en Cassandra
 
 Keyspace `cpa` y tablas en [`infra/cql/01_schema.cql`](../infra/cql/01_schema.cql); consultas en [`infra/cql/02_consultas.cql`](../infra/cql/02_consultas.cql).
 
@@ -244,7 +241,7 @@ Filas en Cassandra: `usage_by_org_day_service` = 11.050 (= Gold) y `cost_14d_by_
 
 ---
 
-## 8. Analítica: detección de anomalías de costo (consigna 6.2 · Analítica o ML)
+## 8. Analítica: detección de anomalías de costo
 
 | Aspecto | Detalle |
 |---|---|
@@ -261,7 +258,7 @@ _Evidencia: `evidence/e2/analitica/metricas.json` y `top_anomalias.csv`._
 
 ---
 
-## 9. Idempotencia (consigna 6.2 · Idempotencia)
+## 9. Idempotencia
 
 `scripts/demo_idempotencia.sh` reinicia el lake y Cassandra y ejecuta el pipeline **tres veces**:
 1. **Corrida 1:** completa desde un lake vacío.
@@ -291,7 +288,7 @@ Tabla completa (19 tablas, todas iguales): `evidence/e2/idempotencia/resumen.md`
 
 ---
 
-## 10. Gobierno preliminar (consigna 6.2 · Gobierno preliminar)
+## 10. Gobierno preliminar
 
 ### 10.1 Responsabilidades (owners)
 
@@ -326,7 +323,7 @@ En producción, el acceso por capa se implementaría con permisos del *object st
 
 ---
 
-## 11. Pruebas y reproducibilidad (consigna 6.2 · Pruebas y reproducibilidad)
+## 11. Pruebas y reproducibilidad
 
 | Aspecto | Implementación |
 |---|---|
@@ -340,7 +337,7 @@ En producción, el acceso por capa se implementaría con permisos del *object st
 
 ---
 
-## 12. Trade-offs explícitos (respuesta al feedback de Arquitectura)
+## 12. Trade-offs explícitos
 
 El detalle por decisión está en `DECISIONS.md` (tablas alternativa → ganaríamos → perderíamos → señal de reversión). Las cinco decisiones con más impacto:
 
@@ -350,7 +347,7 @@ El detalle por decisión está en `DECISIONS.md` (tablas alternativa → ganarí
 | Watermark (D-05) | 62 días + reconciliación | 1–30 días | Estado de dedup de 43.200 claves que crece con el volumen | 0 % de pérdida (medido: 41–82 % con delays cortos) | El estado superara ~1 GB → `MERGE` en Delta |
 | Formato (D-02) | Parquet puro | Delta Lake / Iceberg | Sin ACID: idempotencia por overwrite de particiones completas | Cero dependencias; mismo código en local y Colab | Particiones demasiado grandes para reescribir enteras |
 | Streaming (D-13) | Dos queries encadenadas | Una con todo en `foreachBatch` | ~6 s más por micro-batch | Bronze *exactly-once*; Silver reprocesable sin re-ingerir | O1 (≤ 5 min) en riesgo |
-| Serving (D-11, D-12) | Cassandra en Docker + driver Python | AstraDB + Spark Cassandra Connector | Datos pasan por el driver; hace falta Docker | Demo sin red ni credenciales; sin JARs atados a Spark 4 | Gold > ~1 M filas por corrida o la cátedra exige AstraDB (sólo cambia `.env`) |
+| Serving (D-11, D-12) | Cassandra en Docker + driver Python | AstraDB + Spark Cassandra Connector | Datos pasan por el driver; hace falta Docker | Demo sin red ni credenciales; sin JARs atados a Spark 4 | Gold > ~1 M filas por corrida o se requiere AstraDB (sólo cambia `.env`) |
 
 ### Decisiones abiertas de la E1, cerradas
 
