@@ -84,7 +84,7 @@ def git_sha() -> str:
     try:
         sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True,
                              text=True, check=True).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT, capture_output=True, text=True).stdout
+        dirty = subprocess.run(["git", "status", "--porcelain", "--", ".", ":(exclude)evidence"], cwd=ROOT, capture_output=True, text=True).stdout
         return sha + ("-dirty" if dirty.strip() else "")
     except Exception:  # sin git (p. ej. Colab con zip): se registra igual
         return "unknown"
