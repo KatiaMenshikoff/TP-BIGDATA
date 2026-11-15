@@ -4,8 +4,8 @@
   "filas_anomalas": 190,
   "eventos_anomalos": 191,
   "eventos": 42989,
-  "costo_anomalo_usd": 11174.113600000004,
-  "costo_total_usd": 148351.57590000005,
+  "costo_anomalo_usd": 11174.113600000002,
+  "costo_total_usd": 148351.57589999997,
   "orgs_afectadas": 69,
   "pct_eventos_anomalos": 0.444,
   "pct_costo_anomalo": 7.53

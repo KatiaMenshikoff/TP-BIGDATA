@@ -29,7 +29,7 @@ Comentario general: *"La prioridad en E2 debería ser **conservar esta trazabili
 | 5 | Decisión abierta A2 / D-05 | Cerrar el watermark con Spark real (no simulación) y asegurar que ningún tardío se pierde en silencio | Alta | Iván Josephsohn | 12/11/2026 | `evidence/e2/late_data/resumen.md` (1, 7, 30 y 62 días; balance cierra en los 4) | ✅ Hecho |
 | 6 | Decisión abierta A1 / D-06 | Implementar la normalización FX con flag Q08 | Media | Julián A. Szarfmeser | 12/11/2026 | `silver/fact_billing` (Q08 = 144, Q09 = 13, Q10 = 137) | ✅ Hecho · semántica a confirmar con el docente |
 | 7 | Decisión abierta A4 / D-08 | Implementar el componente analítico (z robusto MAD) y medirlo | Media | Francisco Gomes | 14/11/2026 | `gold/cost_anomaly_mart`; `evidence/e2/analitica/metricas.json` | ✅ Hecho |
-| 8 | Decisión abierta A5 / riesgo K4 | Serving reproducible sin depender de AstraDB en la demo | Media | Francisco Gomes | 14/11/2026 | `infra/docker-compose.yml`; `evidence/e2/serving/cqlsh_consultas.txt` | ✅ Hecho · falta una corrida contra AstraDB real (backlog B-01) |
+| 8 | Decisión abierta A5 / riesgo K4 | Serving reproducible sin depender de AstraDB en la demo | Media | Francisco Gomes | 14/11/2026 | `infra/docker-compose.yml`; `evidence/e2/serving/cqlsh_consultas.txt` | ✅ Hecho · Q1 y Q2 también corridas contra AstraDB (`evidence/e2/serving/astra_consultas.png`) |
 | 9 | Defensa (9,5) | Registrar los problemas encontrados al implementar y cómo se resolvieron, para defenderlos | Media | Todo el equipo | 16/11/2026 | Documento E2, Sección 15 | ✅ Hecho |
 
 Preguntas que llevamos a la revisión del 16/11: semántica del FX de USD (D-06) y si la demo final debe correr contra AstraDB o alcanza con Cassandra local + capturas (D-11).

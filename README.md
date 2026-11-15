@@ -31,7 +31,7 @@ Los artefactos de la Entrega 1 (diseño v1.1, inventario de fuentes, perfil, Map
 
 ## Quickstart (desde un entorno limpio)
 
-Requisitos: Python 3.11+ · Java 17 o 21 · Docker (para Cassandra local). Probado con Python 3.13.9, OpenJDK 21, PySpark 4.0.1, cassandra-driver 3.30.1 y Cassandra 5.0 sobre macOS (colima).
+Requisitos: Python 3.11+ · Java 17 o 21 · Docker (para Cassandra local). Probado con Python 3.13.9, OpenJDK 21, PySpark 4.0.1, cassandra-driver 3.30.1 y Cassandra 5.0 sobre macOS (colima). Validado también desde cero en Google Colab: 12,2 min.
 
 ```bash
 # 0. Dependencias (~2-3 min)
@@ -111,5 +111,5 @@ evidence/            salidas que demuestran la ejecución (E1 y e2/)
 - **Idempotencia:** 3 corridas con los mismos conteos y 0 claves duplicadas en 19 tablas (lake + Cassandra).
 
 ## Limitaciones de esta entrega
-- La evidencia de serving es contra Cassandra 5 local; la corrida contra AstraDB real está en el backlog (B-01).
+- Q1 y Q2 corrieron contra Cassandra 5 local y contra AstraDB (`evidence/e2/serving/astra_consultas.png`); las 3 consultas restantes están en el backlog (B-01).
 - De los 5 marts y 5 consultas del MVP final hay 2 implementados (los que pide la E2); el resto está priorizado en `docs/06_backlog_final.md`.

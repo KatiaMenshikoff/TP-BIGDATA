@@ -6,8 +6,8 @@
   "rows": 80,
   "files": 1,
   "partitions": 1,
-  "bytes": 13766,
-  "avg_file_kb": 13.4,
+  "bytes": 13559,
+  "avg_file_kb": 13.2,
   "key": "org_id",
   "duplicate_keys": 0
  },
@@ -18,8 +18,8 @@
   "rows": 800,
   "files": 1,
   "partitions": 1,
-  "bytes": 76585,
-  "avg_file_kb": 74.8,
+  "bytes": 76466,
+  "avg_file_kb": 74.7,
   "key": "user_id",
   "duplicate_keys": 0
  },
@@ -30,8 +30,8 @@
   "rows": 400,
   "files": 1,
   "partitions": 1,
-  "bytes": 39167,
-  "avg_file_kb": 38.2,
+  "bytes": 38974,
+  "avg_file_kb": 38.1,
   "key": "resource_id",
   "duplicate_keys": 0
  },
@@ -42,8 +42,8 @@
   "rows": 240,
   "files": 3,
   "partitions": 3,
-  "bytes": 40387,
-  "avg_file_kb": 13.1,
+  "bytes": 39782,
+  "avg_file_kb": 12.9,
   "key": "invoice_id",
   "duplicate_keys": 0
  },
@@ -54,8 +54,8 @@
   "rows": 1000,
   "files": 1,
   "partitions": 1,
-  "bytes": 88375,
-  "avg_file_kb": 86.3,
+  "bytes": 88191,
+  "avg_file_kb": 86.1,
   "key": "ticket_id",
   "duplicate_keys": 0
  },
@@ -66,8 +66,8 @@
   "rows": 1500,
   "files": 1,
   "partitions": 1,
-  "bytes": 126500,
-  "avg_file_kb": 123.5,
+  "bytes": 126288,
+  "avg_file_kb": 123.3,
   "key": "touch_id",
   "duplicate_keys": 0
  },
@@ -78,8 +78,8 @@
   "rows": 92,
   "files": 1,
   "partitions": 1,
-  "bytes": 11333,
-  "avg_file_kb": 11.1,
+  "bytes": 11122,
+  "avg_file_kb": 10.9,
   "key": "org_id+survey_date",
   "duplicate_keys": 0
  },
@@ -90,8 +90,8 @@
   "rows": 43200,
   "files": 720,
   "partitions": 60,
-  "bytes": 7533268,
-  "avg_file_kb": 10.2,
+  "bytes": 7453763,
+  "avg_file_kb": 10.1,
   "key": "event_id",
   "duplicate_keys": 0
  },
@@ -102,8 +102,8 @@
   "rows": 80,
   "files": 1,
   "partitions": 0,
-  "bytes": 15153,
-  "avg_file_kb": 14.8,
+  "bytes": 14946,
+  "avg_file_kb": 14.6,
   "key": "org_id+valid_from",
   "duplicate_keys": 0
  },
@@ -114,8 +114,8 @@
   "rows": 800,
   "files": 1,
   "partitions": 0,
-  "bytes": 123174,
-  "avg_file_kb": 120.3,
+  "bytes": 123056,
+  "avg_file_kb": 120.2,
   "key": "user_id",
   "duplicate_keys": 0
  },
@@ -126,8 +126,8 @@
   "rows": 400,
   "files": 1,
   "partitions": 0,
-  "bytes": 38032,
-  "avg_file_kb": 37.1,
+  "bytes": 37844,
+  "avg_file_kb": 37.0,
   "key": "resource_id",
   "duplicate_keys": 0
  },
@@ -138,8 +138,8 @@
   "rows": 240,
   "files": 3,
   "partitions": 3,
-  "bytes": 54044,
-  "avg_file_kb": 17.6,
+  "bytes": 53463,
+  "avg_file_kb": 17.4,
   "key": "invoice_id",
   "duplicate_keys": 0
  },
@@ -150,8 +150,8 @@
   "rows": 42989,
   "files": 60,
   "partitions": 60,
-  "bytes": 3880288,
-  "avg_file_kb": 63.2,
+  "bytes": 3869004,
+  "avg_file_kb": 63.0,
   "key": "event_id",
   "duplicate_keys": 0
  },
@@ -162,7 +162,7 @@
   "rows": 11050,
   "files": 60,
   "partitions": 60,
-  "bytes": 748779,
+  "bytes": 748653,
   "avg_file_kb": 12.2,
   "key": "org_id+usage_date+service",
   "duplicate_keys": 0
@@ -174,7 +174,7 @@
   "rows": 11050,
   "files": 60,
   "partitions": 60,
-  "bytes": 438637,
+  "bytes": 438609,
   "avg_file_kb": 7.1,
   "key": "org_id+date+service",
   "duplicate_keys": 0
@@ -186,8 +186,8 @@
   "rows": 211,
   "files": 58,
   "partitions": 58,
-  "bytes": 523168,
-  "avg_file_kb": 8.8
+  "bytes": 516337,
+  "avg_file_kb": 8.7
  },
  "quarantine.late_events": {
   "zone": "quarantine",

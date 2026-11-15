@@ -14,7 +14,6 @@ Consigna, Secciones 6.2 y 6.6: el trabajo restante se ordena en **obligatorio / 
 | B-06 | Notebook de Colab que ejecute todo el pipeline (Drive como lake) y probar el Quickstart en Colab | 8.2 | Iván Josephsohn | 3 | Notebook ejecutado con salidas |
 | B-07 | Diccionario de datos completo de Silver y Gold | 7.5 | Katia Menshikoff | 3 | `docs/` con todas las columnas, tipos y linaje |
 | B-08 | Presentación ejecutiva, video y guion de defensa con participación de los 4 | 7.5 | Todo el equipo | 10 | Artefactos en el canal de entrega |
-| B-09 | Validar el Quickstart en un entorno limpio (otra máquina) y medir O7 | 8.2 | Katia Menshikoff | 2 | Tiempo medido en el README |
 
 ## Deseable
 

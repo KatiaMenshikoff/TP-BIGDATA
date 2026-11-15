@@ -18,6 +18,6 @@
 | quarantine.silver_usage_events | 211 | 211 | 211 | —/—/— | ✅ |
 | quarantine.late_events | 0 | 0 | 0 | —/—/— | ✅ |
 | cassandra.usage_by_org_day_service | 11,050 | 11,050 | 11,050 | PK (upsert) | ✅ |
-| cassandra.cost_14d_by_org_service | 262 | 262 | 262 | PK (upsert) | ✅ |
+| cassandra.cost_14d_by_org_service | 262 | 262 | 262 | PK (borrar + insertar) | ✅ |
 
 **Resultado:** las tres corridas producen exactamente los mismos conteos y 0 claves duplicadas.

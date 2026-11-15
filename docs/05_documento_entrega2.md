@@ -391,13 +391,12 @@ Continúa la matriz de la Sección 6 del diseño v1, ahora con la evidencia real
 | O4 Calidad trazable | 100 % en Silver o quarantine | 43.200 = 42.989 + 211; balance de reconcile cierra | ✅ |
 | O5 Trazabilidad | 100 % de Bronze con `ingest_ts`, `source_file`, `run_id` | 0 nulos en las 43.200 filas de `bronze/usage_events` (verificado) y en el test de integración | ✅ |
 | O6 Serving en 1 partición | 5 consultas | Q1 y Q2 leen una sola partición | 🟡 2 de 5 |
-| O7 Reproducibilidad | ≤ 15 min desde entorno limpio | Pipeline ~42 s; instalación de dependencias ~2–3 min | ✅ (validar en otra máquina: B-09) |
+| O7 Reproducibilidad | ≤ 15 min desde entorno limpio | Pipeline ~42 s; instalación de dependencias ~2–3 min | ✅ (validado desde cero en Google Colab: 12,2 min) |
 
 ---
 
 ## 14. Limitaciones conocidas
 
-- **Cassandra local, no AstraDB:** el código soporta AstraDB por `.env`, pero la evidencia de la E2 es contra Cassandra 5 en Docker (B-01).
 - **Colab:** el pipeline corre en Colab (sólo PySpark), pero Docker no; en Colab el serving requiere AstraDB.
 - **Recomputo por fecha:** con este desorden cada micro-batch toca las 60 fechas y reconstruye todo Silver/Gold. Es barato con 43 k eventos; a escala, el costo crece con el rango de fechas afectadas (acotado por el watermark).
 - **SCD2 con un solo snapshot:** la fuente trae un único snapshot de orgs; la lógica de cambios está probada con datos sintéticos (test), no con datos reales.
