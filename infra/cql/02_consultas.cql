@@ -12,6 +12,3 @@ SELECT service, cost_14d_usd, requests_14d, window_start, as_of_date
 FROM cpa.cost_14d_by_org_service
 WHERE org_id = 'org_pbhsahxt' AND as_of_date = '2025-08-31'
 LIMIT 5;
-
--- Control de idempotencia: filas totales de la tabla del mart (debe coincidir con Gold y no crecer al re-ejecutar).
-SELECT COUNT(*) FROM cpa.usage_by_org_day_service;

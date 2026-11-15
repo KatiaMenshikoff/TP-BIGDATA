@@ -35,7 +35,7 @@ for t in runs[0].get("cassandra", {}):
     rows = [r["cassandra"].get(t) for r in runs]
     same = len(set(rows)) == 1
     ok &= same
-    lines.append(f"| cassandra.{t} | {rows[0]:,} | {rows[1]:,} | {rows[2]:,} | PK (upsert) | {'✅' if same else '❌'} |")
+    lines.append(f"| cassandra.{t} | {rows[0]:,} | {rows[1]:,} | {rows[2]:,} | {'PK (borrar + insertar)' if t == 'cost_14d_by_org_service' else 'PK (upsert)'} | {'✅' if same else '❌'} |")
 lines.append(f"\n**Resultado:** {'las tres corridas producen exactamente los mismos conteos y 0 claves duplicadas' if ok else 'HAY DIFERENCIAS'}.")
 open(os.path.join(out, "resumen.md"), "w").write("\n".join(lines) + "\n")
 print("\n".join(lines))

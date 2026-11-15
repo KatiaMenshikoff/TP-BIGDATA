@@ -33,7 +33,7 @@ flowchart LR
   end
 
   C[("6 · Serving · Cassandra 5 (Docker) o AstraDB · keyspace cpa<br/>usage_by_org_day_service (Q1) · cost_14d_by_org_service (Q2)")]
-  U["7 · Consumo · cqlsh / BI · FinOps: costo diario, top-N 14 días, anomalías"]
+  U["7 · Consumo · cqlsh · FinOps: costo diario y top-N servicios 14 días"]
   subgraph TXG["Transversales"]
     direction TB
     TX["<b>Observabilidad</b>: _metadata/run_log · query progress · reconciliation.json<br/><b>Calidad</b>: 11 reglas · quarantine · balance Landing = Bronze + descartes<br/><b>Seguridad</b>: secretos en .env · email → SHA-256 · Landing sólo lectura<br/><b>Linaje</b>: run_id + source_file por fila · git SHA por corrida"]
